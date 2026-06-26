@@ -1,0 +1,15 @@
+2026-06-26 15:39:52,216 - [INFO] - [36m[INFO][0m Login attempt for: test_auto@upi
+2026-06-26 15:39:52,579 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 15:39:52,579 - [INFO] - [36m[INFO][0m Risk Score: [33m0.35[0m | Level: [33mMEDIUM[0m | Action: [33mOTP_CHALLENGE[0m
+2026-06-26 15:39:52,581 - [INFO] - [36m[INFO][0m   -> Reason: First time evaluating device on this account
+2026-06-26 15:39:52,581 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 15:39:59,550 - [INFO] - [36m[INFO][0m Login attempt for: test_auto@upi
+2026-06-26 15:39:59,931 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 15:39:59,932 - [INFO] - [36m[INFO][0m Risk Score: [33m0.35[0m | Level: [33mMEDIUM[0m | Action: [33mOTP_CHALLENGE[0m
+2026-06-26 15:39:59,933 - [INFO] - [36m[INFO][0m   -> Reason: First time evaluating device on this account
+2026-06-26 15:39:59,933 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 15:40:20,018 - [INFO] - [36m[INFO][0m Login attempt for: test_auto@upi
+2026-06-26 15:40:20,438 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 15:40:20,439 - [INFO] - [36m[INFO][0m Risk Score: [33m0.35[0m | Level: [33mMEDIUM[0m | Action: [33mOTP_CHALLENGE[0m
+2026-06-26 15:40:20,439 - [INFO] - [36m[INFO][0m   -> Reason: First time evaluating device on this account
+2026-06-26 15:40:20,439 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.

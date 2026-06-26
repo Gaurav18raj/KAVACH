@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAVACH | Registration</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="logo">🛡️ KAVACH <span>Banking</span></a>
+        </header>
+
+        <main>
+            <div class="glass-panel auth-container">
+                <h2 class="text-center">Enrollment</h2>
+                <p class="text-center">Create your account and establish your Behavioral DNA baseline</p>
+
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Ramesh Kumar" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">UPI ID / User ID</label>
+                        <input type="text" id="username" name="username" placeholder="ramesh@upi" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password / MPIN</label>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="off">
+                    </div>
+                    
+                    <button type="submit" class="btn" id="submitBtn">Complete Enrollment</button>
+                    <p id="errorMsg" class="mt-4 text-center hidden" style="color: var(--error); font-size: 0.9rem;"></p>
+                </form>
+                
+                <p class="text-center mt-4">
+                    Already enrolled? <a href="login.html" style="color: var(--primary);">Login here</a>
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <!-- The KAVACH SDK -->
+    <script src="js/kavach-sdk.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/register.js"></script>
+</body>
+</html>

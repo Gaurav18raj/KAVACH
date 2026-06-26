@@ -1,0 +1,59 @@
+import math
+
+# ==========================================
+# KAVACH BACKEND: Behavioral Scorer
+# ==========================================
+# Pointwise Explanation:
+# 1. This is Phase 1 of the ML implementation (Rule-based Z-Score computation).
+# 2. It compares the current login's typing features (hold time, IKI) against the user's stored Behavioral DNA.
+# 3. Z-Score formula: |Current_Value - Baseline_Mean| / Baseline_StdDev.
+# 4. If the Z-score is very high (e.g. > 3), it means the typing is statistically anomalous (likely an attacker).
+# 5. We use a Sigmoid function to normalize the infinite Z-score into a clean 0 to 1 risk score.
+
+def compute_z_score(current_val, mean, std):
+    """Calculates how many standard deviations away the current value is from the mean."""
+    # Prevent division by zero if std is somehow 0 (e.g. very consistent user)
+    if std == 0:
+        std = 1.0 
+    return abs(current_val - mean) / std
+
+def sigmoid_normalization(z_avg):
+    """
+    Normalizes the Z-score to a [0, 1] range.
+    A Z-score of 2 (2 std devs away) is mapped to roughly 0.5 risk.
+    Higher Z-scores asymptotically approach 1.0 (Critical Risk).
+    """
+    # Centered so that z=2 maps to 0.5 (medium risk)
+    return 1 / (1 + math.exp(-(z_avg - 2.0)))
+
+def score_behavior(current_features, baseline_dna):
+    """
+    Compares the current typing payload against the stored DNA.
+    Returns:
+    - score (float): 0.0 (Safe) to 1.0 (Critical)
+    - reasons (list): Human-readable XAI strings explaining anomalies.
+    """
+    reasons = []
+    z_scores = []
+    
+    # 1. Check Hold Time (How long keys are pressed)
+    z_hold = compute_z_score(current_features.hold_mean, baseline_dna.hold_mean, baseline_dna.hold_std)
+    z_scores.append(z_hold)
+    if z_hold > 2.5:
+        reasons.append(f"Typing hold time is highly unusual (Z-Score: {z_hold:.1f})")
+
+    # 2. Check Inter-Key Interval (The rhythm between keys)
+    z_iki = compute_z_score(current_features.iki_mean, baseline_dna.iki_mean, baseline_dna.iki_std)
+    z_scores.append(z_iki)
+    if z_iki > 2.5:
+        reasons.append(f"Typing rhythm (IKI) deviates significantly from baseline (Z-Score: {z_iki:.1f})")
+
+    # 3. Aggregate
+    avg_z = sum(z_scores) / len(z_scores) if z_scores else 0
+    final_score = sigmoid_normalization(avg_z)
+    
+    # Cap very low scores to 0 to prevent noise
+    if final_score < 0.1:
+        final_score = 0.0
+
+    return final_score, reasons

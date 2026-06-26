@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAVACH | Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="logo">🛡️ KAVACH <span>Banking</span></a>
+        </header>
+
+        <main>
+            <div class="glass-panel auth-container">
+                <h2 class="text-center">Welcome Back</h2>
+                <p class="text-center">Sign in to your KAVACH protected account</p>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="username">UPI ID / User ID</label>
+                        <input type="text" id="username" name="username" placeholder="e.g. ramesh@upi" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password / MPIN</label>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="off">
+                    </div>
+                    
+                    <button type="submit" class="btn" id="submitBtn">Login Securely</button>
+                    <p id="errorMsg" class="mt-4 text-center hidden" style="color: var(--error); font-size: 0.9rem;"></p>
+                </form>
+                
+                <p class="text-center mt-4">
+                    New to Kavach? <a href="register.html" style="color: var(--primary);">Enroll now</a>
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <!-- The KAVACH SDK -->
+    <script src="js/kavach-sdk.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/login.js"></script>
+</body>
+</html>

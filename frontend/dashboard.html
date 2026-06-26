@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAVACH | Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="logo">🛡️ KAVACH <span>Banking</span></a>
+            <div class="flex gap-4" style="align-items: center;">
+                <span id="userGreeting" style="font-weight: 500;">Welcome</span>
+                <a href="#" id="logoutBtn" class="btn btn-secondary" style="padding: 0.5rem 1rem;">Logout</a>
+            </div>
+        </header>
+
+        <main style="margin-top: 2rem;">
+            
+            <!-- Security Status Banner -->
+            <div class="glass-panel" style="padding: 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--accent);">
+                <div>
+                    <h3 style="margin-bottom: 0.25rem;">Continuous Auth Active</h3>
+                    <p style="margin-bottom: 0; font-size: 0.9rem;">Your session is being protected by KAVACH behavioral monitoring.</p>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">Current Risk Score</span>
+                    <span class="status-badge status-low" style="font-size: 1.2rem; margin-top: 0.25rem;">0.12 - SAFE</span>
+                </div>
+            </div>
+
+            <h2 style="margin-bottom: 1.5rem;">Quick Actions</h2>
+            
+            <div class="grid">
+                <a href="send-money.html" class="card glass-panel" style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+                    <h3 style="color: var(--primary);">💸 Send Money</h3>
+                    <p>Transfer funds via UPI/IMPS.</p>
+                </a>
+                
+                <a href="#" class="card glass-panel" style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+                    <h3 style="color: var(--primary);">📱 Recharge & Pay Bills</h3>
+                    <p>Mobile, DTH, Fastag, Electricity.</p>
+                </a>
+
+                <a href="#" class="card glass-panel" style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+                    <h3 style="color: var(--primary);">💳 Check Balance</h3>
+                    <p>View account statements and balance.</p>
+                </a>
+
+                <a href="security.html" class="card glass-panel" style="text-decoration: none; color: inherit; transition: transform 0.2s; border: 1px solid var(--warning);">
+                    <h3 style="color: var(--warning);">🛡️ Security Dashboard</h3>
+                    <p>View your Behavioral DNA profile and audit logs.</p>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = utils.getUser();
+            if(!user) {
+                window.location.href = 'login.html';
+            } else {
+                document.getElementById('userGreeting').textContent = `Welcome, ${user.username}`;
+            }
+
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                utils.clearToken();
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>
