@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAVACH | Security Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="dashboard.html" class="logo" style="font-size: 1.2rem;">⬅️ Back to Dashboard</a>
+        </header>
+
+        <main style="margin-top: 2rem;">
+            <h2 style="color: var(--warning); margin-bottom: 1rem;">🛡️ Security Audit & DNA Profile</h2>
+            
+            <div class="glass-panel" style="margin-bottom: 2rem; border-left: 4px solid var(--primary);">
+                <h3>Behavioral DNA Status: <span style="color: var(--primary);">Active</span></h3>
+                <p>Your typing rhythm and device fingerprints are currently securing this session.</p>
+                
+                <div style="display: flex; gap: 2rem; margin-top: 1rem;">
+                    <div>
+                        <small style="color: var(--text-muted); display: block;">Typing Model Confidence</small>
+                        <strong>98.4% Match</strong>
+                    </div>
+                    <div>
+                        <small style="color: var(--text-muted); display: block;">Device Haptics (Gyro)</small>
+                        <strong>Aligned (Flat/Handheld)</strong>
+                    </div>
+                    <div>
+                        <small style="color: var(--text-muted); display: block;">Mouse Latency (AnyDesk Check)</small>
+                        <strong>Normal (No lag detected)</strong>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Recent Authentication Logs</h3>
+            <div class="glass-panel" style="padding: 0;">
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between;">
+                        <span><strong>Current Session</strong> (Behavioral Check)</span>
+                        <span style="color: var(--success);">ALLOW (Risk: 0.12)</span>
+                    </li>
+                    <li style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between;">
+                        <span><strong>Login Attempt</strong> (Sensor Fusion Check)</span>
+                        <span style="color: var(--success);">ALLOW (Risk: 0.05)</span>
+                    </li>
+                    <li style="padding: 1rem; display: flex; justify-content: space-between;">
+                        <span><strong>Previous Login</strong> (New Device Detected)</span>
+                        <span style="color: var(--warning);">STEP-UP OTP (Risk: 0.55)</span>
+                    </li>
+                </ul>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/utils.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = utils.getUser();
+            if(!user) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>

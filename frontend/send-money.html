@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAVACH | Send Money</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="dashboard.html" class="logo" style="font-size: 1.2rem;">⬅️ Back to Dashboard</a>
+        </header>
+
+        <main style="margin-top: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+            <div class="glass-panel">
+                <h2 style="color: var(--primary); text-align: center; margin-bottom: 1.5rem;">💸 Send Money</h2>
+                
+                <form id="transferForm" onsubmit="event.preventDefault(); alert('Demo: Transaction securely processed by KAVACH!'); window.location.href='dashboard.html';">
+                    <div class="form-group">
+                        <label for="payee">Payee UPI ID / Account</label>
+                        <input type="text" id="payee" placeholder="merchant@upi" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount (₹)</label>
+                        <input type="number" id="amount" placeholder="5000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="remarks">Remarks (Optional)</label>
+                        <input type="text" id="remarks" placeholder="Dinner split">
+                    </div>
+                    
+                    <button type="submit" class="btn" style="margin-top: 1rem;">Secure Transfer</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/utils.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = utils.getUser();
+            if(!user) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>
