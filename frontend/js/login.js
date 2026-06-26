@@ -14,8 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
+            // Get transaction amount for Demo purposes
+            const txInput = document.getElementById('txAmount');
+            const txAmount = txInput ? parseFloat(txInput.value) : 0.0;
+            
             // Get behavioral data from the Kavach SDK
-            const behavioralPayload = window.Kavach.getPayload();
+            const behavioralPayload = window.Kavach.getPayload(txAmount);
             utils.logDebug("Sending Payload to KAVACH Engine:", behavioralPayload);
 
             const requestBody = {

@@ -48,7 +48,21 @@ def score_behavior(current_features, baseline_dna):
     if z_iki > 2.5:
         reasons.append(f"Typing rhythm (IKI) deviates significantly from baseline (Z-Score: {z_iki:.1f})")
 
-    # 3. Aggregate
+    # 3. Sensor Fusion: Mouse Entropy (Network Latency / AnyDesk Check)
+    mouse_ent = getattr(current_features, 'mouse_entropy', 0.0)
+    if mouse_ent > 100.0:
+        z_scores.append(3.0) # Highly anomalous
+        reasons.append(f"CRITICAL: High Mouse Entropy ({mouse_ent:.1f}). Possible Remote Desktop (AnyDesk) latency detected.")
+
+    # 4. Sensor Fusion: Gyroscope Haptics (Bot / Remote Access Check)
+    gyro = getattr(current_features, 'gyro_angle', 0.0)
+    # If gyro is completely perfectly 0 (and they didn't just fail to grant permission), it's suspicious for a mobile device.
+    # For this MVP, if gyro is provided and is exactly 0.0, we flag it.
+    if gyro == 0.001: # We'll send 0.001 from frontend to indicate flat phone.
+        z_scores.append(2.5)
+        reasons.append("WARNING: Device is perfectly flat during typing. Possible automated bot or remote access.")
+
+    # 5. Aggregate
     avg_z = sum(z_scores) / len(z_scores) if z_scores else 0
     final_score = sigmoid_normalization(avg_z)
     

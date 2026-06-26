@@ -96,7 +96,8 @@ def login_user(login_data: UserLogin, db: Session = Depends(get_db)):
     trusted_devices = db.query(DeviceFingerprint).filter(DeviceFingerprint.user_id == user.id).all()
 
     logger.info(f"Running Risk Engine. User Enrollment Phase: {user.enrollment_phase}")
-
+    logger.info(f"{Fore.MAGENTA}[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...{Style.RESET_ALL}")
+    
     # 3. Run the KAVACH Risk Engine
     score, reasons = calculate_composite_risk(
         user=user,

@@ -26,6 +26,11 @@
                         <label for="password">Password / MPIN</label>
                         <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="off">
                     </div>
+                    <div class="form-group">
+                        <label for="txAmount">Transaction Amount (Demo Only)</label>
+                        <input type="number" id="txAmount" name="txAmount" placeholder="e.g. 500 (UPI) or 55000 (RTGS)" value="1500" required>
+                        <small style="color: #666; font-size: 0.8rem;">To demonstrate the Hierarchical Risk ML bypass for UPI vs Net Banking.</small>
+                    </div>
                     
                     <button type="submit" class="btn" id="submitBtn">Login Securely</button>
                     <p id="errorMsg" class="mt-4 text-center hidden" style="color: var(--error); font-size: 0.9rem;"></p>

@@ -48,17 +48,26 @@ def calculate_composite_risk(user, current_behavior, current_device, baseline_dn
     c_score, c_reasons = score_context(current_device)
     all_reasons.extend(c_reasons)
 
-    # 3. Phase Gate Application
+    # 3. Phase Gate & Hierarchical Risk Scaling Application
+    transaction_amount = getattr(current_behavior, 'transaction_amount', 0.0) or 0.0
+
     if user.enrollment_phase:
         # NO BEHAVIORAL SCORING YET.
         # Fallback to rule-based device/context scoring.
         composite_score = (ENROLL_WEIGHT_DEVICE * d_score) + (ENROLL_WEIGHT_CONTEXT * c_score)
         all_reasons.append("INFO: Account in Enrollment Phase. Behavioral ML is muted.")
+    elif transaction_amount > 0 and transaction_amount < 2000:
+        # HIERARCHICAL SCALING: Low-value UPI bypasses heavy ML for ultra-low latency.
+        composite_score = (ENROLL_WEIGHT_DEVICE * d_score) + (ENROLL_WEIGHT_CONTEXT * c_score)
+        all_reasons.append(f"INFO: Low-Value UPI Transaction (₹{transaction_amount}). Behavioral ML bypassed for <0.01s latency.")
     else:
-        # FULL ML PRODUCTION MODE
+        # FULL ML PRODUCTION MODE (Standard logins or High-Value transfers >= ₹2000)
         b_score, b_reasons = score_behavior(current_behavior, baseline_dna)
         all_reasons.extend(b_reasons)
         
+        if transaction_amount >= 50000:
+             all_reasons.append(f"WARNING: High-Value Transaction (₹{transaction_amount}). Enforcing maximum Sensor Fusion rigor.")
+
         # Formula: 0.40(B) + 0.25(D) + 0.20(C) + 0.15(F)
         # Note: Failed login scorer is mocked as 0 for this immediate login flow MVP
         f_score = 0.0 
@@ -72,6 +81,12 @@ def calculate_composite_risk(user, current_behavior, current_device, baseline_dn
         
         if not b_reasons and not d_reasons and not c_reasons:
             all_reasons.append("All signals normal. Rhythm matches Behavioral DNA.")
+
+        # ZERO-TRUST OVERRIDE (Hard Block Rules)
+        # If any reason contains "CRITICAL: High Mouse", it is a definite attack.
+        if any("CRITICAL: High Mouse Entropy" in r for r in all_reasons):
+            all_reasons.append("ZERO-TRUST OVERRIDE: Critical sensor anomalies bypass standard ML formula.")
+            composite_score = 0.95
 
     return round(composite_score, 2), all_reasons
 

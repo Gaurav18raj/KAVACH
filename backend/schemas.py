@@ -22,9 +22,11 @@ class BehavioralData(BaseModel):
     hold_std: float
     iki_mean: float
     iki_std: float
+    mouse_entropy: Optional[float] = 0.0      # Advanced Sensor Fusion
+    gyro_angle: Optional[float] = 0.0         # Advanced Sensor Fusion
+    transaction_amount: Optional[float] = 0.0 # Hierarchical UPI Scaling
     backspace_count: int
     hesitation_ms: float
-    mouse_entropy: float
 
 class DeviceData(BaseModel):
     userAgent: str

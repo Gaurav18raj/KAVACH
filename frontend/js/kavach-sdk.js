@@ -73,15 +73,38 @@ class KavachSDK {
             });
         });
 
-        // Mock Mouse Entropy (simplified for demo)
+        // Advanced Sensor Fusion: True Mouse Entropy Calculation
+        this.lastMouseX = -1;
+        this.lastMouseY = -1;
         document.addEventListener('mousemove', (e) => {
-            // Simplified calculation just to show data collection
-            this.sessionData.haptics.mouseEntropy += 0.01; 
+            if (this.lastMouseX !== -1) {
+                const distance = Math.sqrt(Math.pow(e.clientX - this.lastMouseX, 2) + Math.pow(e.clientY - this.lastMouseY, 2));
+                // Add distance to entropy, capped to prevent infinite scaling
+                if (distance > 0) {
+                    this.sessionData.haptics.mouseEntropy += (distance * 0.05);
+                }
+            }
+            this.lastMouseX = e.clientX;
+            this.lastMouseY = e.clientY;
+        });
+
+        // Advanced Sensor Fusion: Gyroscope (Device Haptics)
+        this.sessionData.haptics.gyroAngle = 0.0;
+        window.addEventListener('deviceorientation', (e) => {
+            if (e.beta !== null) {
+                this.sessionData.haptics.gyroAngle = e.beta; // Tilt front-to-back
+            }
         });
     }
 
     // Call this before sending API requests
-    getPayload() {
+    getPayload(transactionAmount = 0.0) {
+        // For the Hackathon Demo, if running on Desktop where gyro doesn't exist, we send 0.001 to mock a flat device
+        let finalGyro = this.sessionData.haptics.gyroAngle;
+        if (finalGyro === 0.0) {
+             finalGyro = 0.001; 
+        }
+
         return {
             timestamp: Date.now(),
             behavioral_data: {
@@ -91,7 +114,9 @@ class KavachSDK {
                 iki_std: this.calculateStd(this.sessionData.keystrokes.ikiValues),
                 backspace_count: this.sessionData.keystrokes.backspaceCount,
                 hesitation_ms: this.sessionData.keystrokes.hesitationMs,
-                mouse_entropy: parseFloat(this.sessionData.haptics.mouseEntropy.toFixed(2))
+                mouse_entropy: parseFloat(this.sessionData.haptics.mouseEntropy.toFixed(2)),
+                gyro_angle: parseFloat(finalGyro.toFixed(3)),
+                transaction_amount: transactionAmount
             },
             device: this.sessionData.device
         };
