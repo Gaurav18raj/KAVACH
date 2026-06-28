@@ -2,8 +2,7 @@
  * KAVACH - Shared Utilities
  */
 
-const API_BASE_URL = "http://localhost:8000/api/v1";
-
+const API_BASE_URL = `${window.location.origin}/api/v1`;
 const utils = {
     // Show errors on forms
     showError(msgId, message) {
