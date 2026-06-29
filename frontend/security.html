@@ -55,7 +55,9 @@
 
             // Fetch DNA
             try {
-                const dnaResponse = await fetch(`${API_BASE_URL}/user/dna?username=${encodeURIComponent(user.username)}`);
+                const dnaResponse = await fetch(`${API_BASE_URL}/user/dna?username=${encodeURIComponent(user.username)}`, {
+                    headers: { 'Authorization': `Bearer ${utils.getToken()}` }
+                });
                 if (dnaResponse.ok) {
                     const dnaData = await dnaResponse.json();
                     document.getElementById('dnaStatus').textContent = dnaData.status;
@@ -69,7 +71,9 @@
 
             // Fetch Logs
             try {
-                const logsResponse = await fetch(`${API_BASE_URL}/user/logs?username=${encodeURIComponent(user.username)}`);
+                const logsResponse = await fetch(`${API_BASE_URL}/user/logs?username=${encodeURIComponent(user.username)}`, {
+                    headers: { 'Authorization': `Bearer ${utils.getToken()}` }
+                });
                 if (logsResponse.ok) {
                     const logsData = await logsResponse.json();
                     const list = document.getElementById('logsList');

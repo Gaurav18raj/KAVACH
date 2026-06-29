@@ -85,7 +85,7 @@ hacker_payload = {
         "hold_mean": 250.0, "hold_std": 150.0, # Erratic, slow typing
         "iki_mean": 500.0, "iki_std": 300.0,
         "backspace_count": 5, "hesitation_ms": 2500.0,
-        "mouse_entropy": 150.0, # High AnyDesk Latency
+        "mouse_entropy": 450.0, # High AnyDesk Latency
         "gyro_angle": 0.001,    # Phone lying perfectly flat
         "transaction_amount": 99000.0 # Trying to steal Rs.99,000
     },

@@ -103,6 +103,36 @@ def run_automated_tests():
         server_process.wait()
         print("[+] Tests completed. Returning to menu...")
 
+def run_kli_demo():
+    print("\n[*] Initializing Kavach Ledger Intelligence (KLI) Demo...")
+    if not os.path.exists("seed_demo_data.py") or not os.path.exists("simulate_kli_attack.py"):
+        print("[!] ERROR: KLI demo scripts not found.")
+        return
+
+    # Seed the DB
+    try:
+        subprocess.check_call([sys.executable, "seed_demo_data.py"])
+    except subprocess.CalledProcessError:
+        print("\n[!] Error seeding database.")
+        return
+
+    # Start the server temporarily
+    print("\n[*] Starting temporary KAVACH backend server for testing...")
+    server_process = subprocess.Popen([sys.executable, "-m", "uvicorn", "backend.main:app", "--port", "8000"], 
+                                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    time.sleep(3) # Wait for server to boot
+
+    try:
+        print("[*] Running Financial Ledger Attack Scenarios...\n")
+        subprocess.check_call([sys.executable, "simulate_kli_attack.py"])
+    except subprocess.CalledProcessError:
+        print("\n[!] Simulation encountered an error.")
+    finally:
+        print("\n[*] Shutting down temporary testing server.")
+        server_process.terminate()
+        server_process.wait()
+        print("[+] KLI Demo completed. Returning to menu...")
+
 def main_menu():
     while True:
         print("\n================================================================================")
@@ -110,22 +140,27 @@ def main_menu():
         print("================================================================================")
         print("1. Start Live KAVACH Server (Web Demo)")
         print("2. Run Automated ML Attack Tests (Good User vs Jamtara Hacker)")
-        print("3. Exit KAVACH")
+        print("3. Seed KLI Profiles & Run 5-Friends Demo (Financial Ledger)")
+        print("4. Exit KAVACH")
         print("================================================================================")
         
-        choice = input("Select an option (1-3) > ").strip()
+        choice = input("Select an option (1-4) > ").strip()
         
         if choice == '1':
             start_server()
         elif choice == '2':
             run_automated_tests()
         elif choice == '3':
+            run_kli_demo()
+        elif choice == '4':
             print("\n[*] Exiting KAVACH. Goodbye!")
             sys.exit(0)
         else:
-            print("[!] Invalid choice. Please select 1, 2, or 3.")
+            print("[!] Invalid choice. Please select 1, 2, 3, or 4.")
 
 if __name__ == "__main__":
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(BASE_DIR)
     clear_screen()
     print_banner()
     prompt_install_dependencies()

@@ -80,3 +80,29 @@ class DeviceFingerprint(Base):
     
     trust_score = Column(Float, default=1.0)
     last_seen = Column(DateTime(timezone=True), server_default=func.now())
+
+class TransactionHistory(Base):
+    __tablename__ = "transaction_history"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    amount = Column(Float)
+    recipient_upi = Column(String)
+    transaction_type = Column(String, default="P2P")
+    timestamp = Column(DateTime(timezone=True), server_default=func.now())
+
+class UserSpendingProfile(Base):
+    __tablename__ = "user_spending_profiles"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    
+    avg_txn_amount = Column(Float, default=0.0)
+    max_single_txn = Column(Float, default=0.0)
+    daily_total_cap = Column(Float, default=0.0)
+    monthly_total_cap = Column(Float, default=0.0)
+    velocity_norm = Column(Float, default=0.0) # normal transactions per day
+    active_hours_start = Column(Integer, default=8) # 8 AM
+    active_hours_end = Column(Integer, default=22) # 10 PM
+    
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())

@@ -39,6 +39,7 @@
                             required>
                     </div>
                     
+                    <div id="kavachRiskBanner" class="hidden" style="margin-top:1rem; padding:1rem; border-radius:8px;"></div>
                     <button type="submit" id="submitBtn" class="btn" style="margin-top: 1rem;">Secure Transfer</button>
                     <p id="errorMsg" class="error hidden" style="margin-top: 1rem;"></p>
                 </form>
@@ -80,7 +81,10 @@
                 try {
                     const response = await fetch(`${API_BASE_URL}/transaction`, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${utils.getToken()}`
+                        },
                         body: JSON.stringify({
                             username: user.username,
                             payee_upi: payee,
@@ -92,18 +96,25 @@
 
                     const data = await response.json();
 
+                    const banner = document.getElementById('kavachRiskBanner');
+                    
                     if (!response.ok) {
                         utils.showError('errorMsg', data.detail || "Transaction failed.");
                     } else if (data.access_granted) {
-                        alert(`Transaction Successful!\nRisk Score: ${data.risk_score}`);
-                        window.location.href = 'dashboard.html';
+                        banner.style.background = 'rgba(34,197,94,0.15)';
+                        banner.style.border = '1px solid #22c55e';
+                        banner.innerHTML = `<strong style="color:#22c55e">KAVACH APPROVED</strong><br>
+                            Risk Score: ${data.risk_score} | Transfer of Rs.${amount} to ${payee} completed.`;
+                        banner.classList.remove('hidden');
+                        setTimeout(() => window.location.href = 'dashboard.html', 3000);
                     } else {
                         // Handled based on Action
-                        if (data.action === "OTP_CHALLENGE") {
-                            utils.showError('errorMsg', `[RISK: CHALLENGE] Unusual behavior detected. OTP Challenge required.`);
-                        } else {
-                            utils.showError('errorMsg', `[RISK: CRITICAL] Transaction Blocked. ${data.reasons.join(', ')}`);
-                        }
+                        banner.style.background = 'rgba(239,68,68,0.15)';
+                        banner.style.border = '1px solid #ef4444';
+                        banner.innerHTML = `<strong style="color:#ef4444">KAVACH BLOCKED</strong><br>
+                            Risk Score: ${data.risk_score}<br>
+                            ${data.reasons.map(r => `• ${r}`).join('<br>')}`;
+                        banner.classList.remove('hidden');
                     }
                 } catch (error) {
                     console.error("Tx Error:", error);

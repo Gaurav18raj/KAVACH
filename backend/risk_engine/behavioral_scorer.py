@@ -50,7 +50,7 @@ def score_behavior(current_features, baseline_dna):
 
     # 3. Sensor Fusion: Mouse Entropy (Network Latency / AnyDesk Check)
     mouse_ent = getattr(current_features, 'mouse_entropy', 0.0)
-    if mouse_ent > 100.0:
+    if mouse_ent > 300.0:
         z_scores.append(3.0) # Highly anomalous
         reasons.append(f"CRITICAL: High Mouse Entropy ({mouse_ent:.1f}). Possible Remote Desktop (AnyDesk) latency detected.")
 

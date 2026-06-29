@@ -10,10 +10,11 @@ from colorama import Fore, Style
 from datetime import datetime, timedelta
 
 from .database import engine, Base, get_db
-from .models import User, LoginLog, DeviceFingerprint, BehavioralBaseline
+from .models import User, LoginLog, DeviceFingerprint, BehavioralBaseline, TransactionHistory, UserSpendingProfile
 from .schemas import UserRegister, UserLogin, TransactionRequest, RiskResponse, UserProfile
-from .auth import get_password_hash, verify_password, create_access_token
+from .auth import get_password_hash, verify_password, create_access_token, get_current_user
 from .risk_engine.composite_scorer import calculate_composite_risk, determine_action
+from .risk_engine.transaction_scorer import score_transaction
 from .enrollment.enrollment_manager import process_enrollment_event
 from .config import ENROLLMENT_SESSIONS
 
@@ -37,9 +38,10 @@ logger = logging.getLogger("kavach")
 logger.setLevel(logging.INFO)
 
 # 1. Console Handler (Colored output for Demo)
-ch = logging.StreamHandler()
-ch.setFormatter(ColorLogFormatter('%(message)s'))
-logger.addHandler(ch)
+if not logger.handlers:
+    ch = logging.StreamHandler()
+    ch.setFormatter(ColorLogFormatter('%(message)s'))
+    logger.addHandler(ch)
 
 # 2. File Handler (Permanent Audit Trail)
 os.makedirs("logs", exist_ok=True)
@@ -55,11 +57,32 @@ app = FastAPI(title="KAVACH AI Behavioral Auth")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:8000", "http://127.0.0.1:8000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+from fastapi import Request
+import time
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start_time = time.time()
+    
+    # Let the request process
+    response = await call_next(request)
+    
+    process_time = (time.time() - start_time) * 1000
+    formatted_process_time = '{0:.2f}'.format(process_time)
+    
+    # Log everything that comes from the frontend
+    if request.url.path.startswith("/api/v1/"):
+        method_color = Fore.CYAN if request.method == "GET" else Fore.MAGENTA
+        status_color = Fore.GREEN if response.status_code < 400 else Fore.RED
+        logger.info(f"[UI ACTION] {method_color}{request.method}{Style.RESET_ALL} {request.url.path} - {status_color}{response.status_code}{Style.RESET_ALL} ({formatted_process_time}ms)")
+        
+    return response
 
 # --- API ROUTES ---
 
@@ -184,7 +207,7 @@ def login_user(login_data: UserLogin, db: Session = Depends(get_db)):
     # 5. Post-Login processing
     if action != "BLOCK":
         process_enrollment_event(db, user, login_data.behavioral_data)
-        if action == "ALLOW" and not any(d.canvas_hash == login_data.device.canvasHash for d in trusted_devices):
+        if not any(d.canvas_hash == login_data.device.canvasHash for d in trusted_devices):
             new_dev = DeviceFingerprint(
                 user_id=user.id,
                 canvas_hash=login_data.device.canvasHash,
@@ -218,9 +241,12 @@ def login_user(login_data: UserLogin, db: Session = Depends(get_db)):
 
 # --- TRANSACTION ENDPOINT ---
 @app.post("/api/v1/transaction", response_model=RiskResponse)
-def process_transaction(tx_data: TransactionRequest, db: Session = Depends(get_db)):
+def process_transaction(tx_data: TransactionRequest, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     logger.info(f"Transaction attempt by: {tx_data.username} for amount: {tx_data.amount}")
     
+    if tx_data.username != current_user:
+        raise HTTPException(status_code=403, detail="Not authorized to act for this user")
+        
     user = db.query(User).filter(User.username == tx_data.username).first()
     if not user:
         raise HTTPException(status_code=401, detail="User not found")
@@ -235,22 +261,50 @@ def process_transaction(tx_data: TransactionRequest, db: Session = Depends(get_d
         LoginLog.timestamp >= time_threshold
     ).count()
 
-    # Apply 1.3x weight scrutiny if amount is above 50,000 as per feedback
-    if tx_data.amount > 50000:
-        logger.info(f"{Fore.YELLOW}High-Value Transfer ({tx_data.amount}). Applying 1.3x behavioral weight scrutiny.{Style.RESET_ALL}")
-        # Note: the actual weight logic is inside composite_scorer.py. We will just pass the transaction_amount
-        # to the behavioral data so the scorer knows to apply it.
-    
+    # KAVACH LEDGER INTELLIGENCE (KLI) - Profile User's Financial Behavior
+    user_profile = db.query(UserSpendingProfile).filter(UserSpendingProfile.user_id == user.id).first()
+    txn_score, txn_reasons = score_transaction(
+        user_profile=user_profile,
+        amount=tx_data.amount,
+        recipient_upi=tx_data.payee_upi,
+        db=db,
+        user_id=user.id
+    )
+
     score, reasons = calculate_composite_risk(
         user=user,
         current_behavior=tx_data.behavioral_data,
         current_device=tx_data.device,
         baseline_dna=baseline,
         trusted_devices=trusted_devices,
-        failed_login_count=failed_login_count
+        failed_login_count=failed_login_count,
+        txn_score=txn_score,
+        txn_reasons=txn_reasons
     )
 
     risk_level, action = determine_action(score)
+    
+    # Post-Transaction Ledger Update
+    if action == "ALLOW":
+        new_txn = TransactionHistory(
+            user_id=user.id,
+            amount=tx_data.amount,
+            recipient_upi=tx_data.payee_upi
+        )
+        db.add(new_txn)
+        
+        # Update Profile
+        if not user_profile:
+            user_profile = UserSpendingProfile(user_id=user.id)
+            db.add(user_profile)
+        
+        # Simple rolling average
+        all_txns = db.query(TransactionHistory).filter(TransactionHistory.user_id == user.id).count() + 1
+        user_profile.avg_txn_amount = ((user_profile.avg_txn_amount * (all_txns - 1)) + tx_data.amount) / all_txns
+        if tx_data.amount > user_profile.max_single_txn:
+            user_profile.max_single_txn = tx_data.amount
+            
+        db.commit()
     
     if action == "ALLOW":
         color = Fore.GREEN
@@ -271,12 +325,29 @@ def process_transaction(tx_data: TransactionRequest, db: Session = Depends(get_d
     )
 
 @app.get("/api/v1/balance")
-def get_balance(username: str):
-    # Mock balance endpoint for the demo
-    return {"username": username, "balance": 84250.00}
+def get_balance(current_user: str = Depends(get_current_user), db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.username == current_user).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+        
+    recent = db.query(TransactionHistory).filter(TransactionHistory.user_id == user.id).order_by(TransactionHistory.timestamp.desc()).limit(5).all()
+    
+    # Calculate balance based on starting 100000 minus all successful transactions
+    all_txns = db.query(TransactionHistory).filter(TransactionHistory.user_id == user.id, TransactionHistory.status == 'ALLOWED').all()
+    total_spent = sum([t.amount for t in all_txns])
+    balance = 100000.0 - total_spent
+    
+    return {
+        "balance": balance,
+        "currency": "INR",
+        "account": user.username,
+        "recent_transactions": [{"amount": t.amount, "to": t.recipient_upi, "status": t.status} for t in recent]
+    }
 
 @app.get("/api/v1/user/logs")
-def get_user_logs(username: str, db: Session = Depends(get_db)):
+def get_user_logs(username: str, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+    if username != current_user:
+        raise HTTPException(status_code=403, detail="Not authorized")
     user = db.query(User).filter(User.username == username).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -284,7 +355,9 @@ def get_user_logs(username: str, db: Session = Depends(get_db)):
     return [{"timestamp": l.timestamp, "score": l.composite_score, "level": l.risk_level, "action": l.action_taken, "reasons": l.reasons} for l in logs]
 
 @app.get("/api/v1/user/dna")
-def get_user_dna(username: str, db: Session = Depends(get_db)):
+def get_user_dna(username: str, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+    if username != current_user:
+        raise HTTPException(status_code=403, detail="Not authorized")
     user = db.query(User).filter(User.username == username).first()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")

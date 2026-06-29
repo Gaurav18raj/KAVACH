@@ -97,28 +97,37 @@ class KavachSDK {
             this.lastKeyUpTime = upTime;
         });
 
-        // Track hesitation on submit buttons
-        const submitBtns = document.querySelectorAll('button[type="submit"]');
-        submitBtns.forEach(btn => {
-            btn.addEventListener('mouseenter', () => {
-                const hesitation = Date.now() - this.lastKeyUpTime;
-                this.sessionData.keystrokes.hesitationMs = hesitation;
+        // Track hesitation on form submit
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', () => {
+                if (this.lastKeyUpTime) {
+                    this.sessionData.keystrokes.hesitationMs = Date.now() - this.lastKeyUpTime;
+                }
             });
         });
 
-        // Advanced Sensor Fusion: True Mouse Entropy Calculation
+        // Advanced Sensor Fusion: True Mouse Entropy Calculation (Variance/Jerkiness)
         this.lastMouseX = -1;
         this.lastMouseY = -1;
+        this.lastMouseTime = -1;
         document.addEventListener('mousemove', (e) => {
-            if (this.lastMouseX !== -1) {
+            const now = Date.now();
+            if (this.lastMouseX !== -1 && this.lastMouseTime !== -1) {
                 const distance = Math.sqrt(Math.pow(e.clientX - this.lastMouseX, 2) + Math.pow(e.clientY - this.lastMouseY, 2));
-                // Add distance to entropy, capped to prevent infinite scaling
-                if (distance > 0) {
-                    this.sessionData.haptics.mouseEntropy += (distance * 0.05);
+                const timeDiff = now - this.lastMouseTime;
+                
+                // Track rapid, jerky movements typical of Remote Desktop latency
+                if (timeDiff > 0 && distance > 0) {
+                    const speed = distance / timeDiff;
+                    if (speed > 5.0) { // Highly erratic speed jump
+                        this.sessionData.haptics.mouseEntropy += speed;
+                    }
                 }
             }
             this.lastMouseX = e.clientX;
             this.lastMouseY = e.clientY;
+            this.lastMouseTime = now;
         });
 
         // Advanced Sensor Fusion: Gyroscope (Device Haptics)

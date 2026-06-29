@@ -89,7 +89,9 @@
                 display.textContent = "Fetching...";
                 
                 try {
-                    const response = await fetch(`${API_BASE_URL}/balance?username=${encodeURIComponent(user.username)}`);
+                    const response = await fetch(`${API_BASE_URL}/balance?username=${encodeURIComponent(user.username)}`, {
+                        headers: { 'Authorization': `Bearer ${utils.getToken()}` }
+                    });
                     const data = await response.json();
                     if(response.ok) {
                         display.innerHTML = `<strong style="font-size: 1.2rem; color: var(--success);">₹ ${data.balance.toLocaleString('en-IN', {minimumFractionDigits: 2})}</strong>`;

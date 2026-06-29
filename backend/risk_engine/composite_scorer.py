@@ -16,7 +16,7 @@ from .context_scorer import score_context
 #    - If user is in PRODUCTION: We use the full 4-pillar risk formula.
 # 3. Aggregates all human-readable reasons for the Audit Trail / Security Dashboard.
 
-def calculate_composite_risk(user, current_behavior, current_device, baseline_dna, trusted_devices, failed_login_count=0):
+def calculate_composite_risk(user, current_behavior, current_device, baseline_dna, trusted_devices, failed_login_count=0, txn_score=0.0, txn_reasons=None):
     """
     [ADVANCED RISK SCORING ALGORITHM]
     Role: Orchestrates the calculation of the final risk score by fusing multiple intelligence streams.
@@ -38,6 +38,8 @@ def calculate_composite_risk(user, current_behavior, current_device, baseline_dn
     resulting in a Block action.
     """
     all_reasons = []
+    if txn_reasons:
+        all_reasons.extend(txn_reasons)
     composite_score = 0.0
     
     # 1. Device Scoring (Always runs)
@@ -88,6 +90,11 @@ def calculate_composite_risk(user, current_behavior, current_device, baseline_dn
             (WEIGHT_CONTEXT * c_score) +
             (WEIGHT_FAILED_LOGIN * f_score)
         )
+
+        # Integrate TxnRisk if applicable
+        if txn_score > 0.0:
+            # 60% TxnRisk, 40% Behavioral/Login Risk (as proposed)
+            composite_score = (0.60 * txn_score) + (0.40 * composite_score)
         
         if not b_reasons and not d_reasons and not c_reasons:
             all_reasons.append("All signals normal. Rhythm matches Behavioral DNA.")

@@ -19,8 +19,8 @@ def score_context(current_device):
     # Check 1: Standard Indian Timezone Offset is -330 mins (Asia/Kolkata)
     # If the user is logging in with a completely different timezone offset, flag it.
     if current_device.timezoneOffset != -330:
-        # It's not inherently fraudulent to travel, but it increases risk.
-        score += 0.4
-        reasons.append(f"Device timezone offset ({current_device.timezoneOffset}) does not match India standard (-330)")
+        # It's not inherently fraudulent to travel, but it increases risk slightly.
+        score += 0.1
+        reasons.append(f"INFO: Device timezone offset ({current_device.timezoneOffset}) differs from India standard. Possible NRI or VPN.")
 
     return min(score, 1.0), reasons

@@ -1,115 +1,130 @@
-<div align="center">
-  <h1>🛡️ KAVACH</h1>
-  <p><strong>AI-Driven Behavioral Authentication Engine for Digital Banking</strong></p>
-  
-  [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
-  [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688.svg)](https://fastapi.tiangolo.com/)
-  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-  [![Hackathon](https://img.shields.io/badge/PSB%20Hackathon-MNNIT%20Allahabad-orange.svg)]()
-</div>
-
-<br>
-
-> **Developed by:** Deepak Kumar Ravi, Gaurav Raj, and Umesh Gupta  
-> **Organization:** PSB Hackathon (Central Bank of India) @ MNNIT Allahabad  
+<h1 align="center">🛡️ KAVACH</h1>
+<h3 align="center">AI-Driven Behavioral Authentication Engine for Digital Banking</h3>
+<p align="center">
+  <em>Protecting Indian Banking from Jamtara-style Social Engineering and Remote Access Frauds using Zero-Trust Behavioral ML.</em>
+</p>
 
 ---
 
-## 📖 The Problem: "Jamtara" and Social Engineering
-The Indian digital banking ecosystem (UPI, Net Banking, Mobile Banking) is highly advanced but overwhelmingly relies on **Static Authentication** (Passwords, MPINs, SMS OTPs). 
+## 🛑 The Problem Statement
+In recent years, digital banking fraud in India (especially UPI and IMPS) has skyrocketed. Fraudsters using social engineering techniques, fake customer support calls, and screen-sharing apps (like AnyDesk or TeamViewer) easily bypass traditional security measures (Passwords, MPINs, and SMS OTPs). 
 
-Cybercriminals exploit this via social engineering—tricking rural or unaware users into installing screen-sharing malware (like AnyDesk) or phishing their OTPs. Once the attacker has the credential, traditional banking systems cannot distinguish between the legitimate user and the attacker. The result? Massive financial fraud.
+Once the fraudster has the victim's credentials or screen access, traditional banking apps assume the session is legitimate. **We need a system that authenticates the *human*, not just the password.**
 
-## 🚀 The Solution: KAVACH (Continuous Behavioral Authentication)
-**KAVACH** shifts the security paradigm from *"What you know"* (Passwords) to *"Who you are and how you act"* (Behavioral DNA). 
+## 🎯 Our Goal
+1. Differentiate between legitimate users and suspicious attackers even *after* a successful login.
+2. Implement AI-enabled behavior-based authentication.
+3. Prevent account takeover (ATO) and digital frauds without adding friction to legitimate users.
+4. Harden the login process dynamically based on behavioral risk scoring.
 
-By silently analyzing Keystroke Dynamics, Device Haptics, Mouse Entropy, and Device Fingerprinting, KAVACH acts as an invisible security guard. Even if a scammer steals an OTP, their typing rhythm and hardware signature will not match the user's baseline, resulting in an immediate transaction block.
+## 💡 Our Proposed Solution: KAVACH
+**KAVACH** is a continuous, invisible authentication layer that runs entirely in the background. It analyzes the **Behavioral DNA** of the user—their typing rhythm, hesitation, device handling, and financial ledger patterns. 
 
----
+By employing **Sensor Fusion** and a custom **Kavach Ledger Intelligence (KLI)** engine, Kavach detects the subtle differences between the actual account holder and a fraudster (or a Remote Desktop bot). 
 
-## 🎯 Project Goals
-| Goal | Description |
-| :--- | :--- |
-| **Zero-Trust Validation** | Never trust a login just because the password is correct. Always verify the Behavioral DNA. |
-| **Frictionless Security** | Provide military-grade security without adding a 5-second loading screen to a ₹50 UPI payment. |
-| **DPDP Compliance** | Utilize a "Zero-Knowledge" architecture. We do not record what is typed, only the *timing matrix* between keystrokes. |
-| **Remote-Access Defense** | Fuse digital inputs with physical sensors (Gyroscopes) to detect when a phone is being remotely operated. |
+If an anomaly is detected, Kavach triggers an instant `OTP_CHALLENGE` or `BIOMETRIC_STEP_UP` before the funds leave the bank.
 
 ---
 
-## 🧠 Core Concepts & Innovation
+## 🏗️ Architecture & Working Diagram
 
-### 1. Hierarchical Risk Scaling (The UPI Paradigm)
-India processes 14+ Billion UPI transactions monthly. A heavy ML model cannot be run on every ₹10 payment. KAVACH dynamically scales its defense:
-*   **Low-Value UPI (< ₹2,000):** Relies on instant Device Fingerprinting and Canvas Hashing (0.01s latency).
-*   **High-Value / Net Banking:** Activates the full Behavioral ML Matrix (Keystrokes + Sensor Fusion) requiring slightly slower, deliberate input.
-
-### 2. Phase-Gated Enrollment (Solving the Cold Start)
-ML systems often suffer from "False Positives" on Day 1 because they lack baseline data. KAVACH utilizes a Phase-Gated system:
-*   **Logins 1 to 5 (Enrollment Phase):** The Behavioral ML is *muted*. The system quietly observes and builds a highly confident Timing Matrix baseline.
-*   **Login 6+ (Production Phase):** The Zero-Trust Engine fully activates.
-
-### 3. Sensor Fusion (Mouse Entropy & Haptics)
-*   **Net Banking:** KAVACH monitors "Mouse Entropy". Attackers using remote-desktop software (AnyDesk) produce mathematical "micro-stutters" due to network latency. KAVACH detects this anomaly instantly.
-*   **Mobile Banking:** Fuses typing speed with physical Gyroscope data. If typing occurs while the phone is completely flat and stationary on a desk, it flags potential remote-control tampering.
-
----
-
-## 🏗️ System Architecture
-
-The KAVACH architecture operates as a **Headless SDK & Risk API** designed to sit invisibly inside the Central Bank of India's existing applications.
+Kavach employs a Zero-Trust architecture evaluating 5 layers of signals on every interaction:
 
 ```mermaid
 graph TD
-    A[Bank Customer] -->|Enters MPIN/Password| B(KAVACH Frontend SDK)
-    B -->|Collects Timing Matrix, Canvas Hash| C{KAVACH Zero-Trust API}
+    A[User Action: Login / Transfer] --> B{Kavach Edge SDK}
+    B -->|Keystroke Dynamics| C(Behavioral Scorer)
+    B -->|Mouse/Gyro Entropy| C
+    B -->|Canvas Hash| D(Device Fingerprint)
+    A -->|Amount & Payee| E(Ledger Intelligence)
     
-    C -->|Phase-Gated Evaluation| D[Composite Risk Engine]
+    C --> F((Composite Risk Engine))
+    D --> F
+    E --> F
     
-    D -->|Device Scorer 25%| E[Device Baseline]
-    D -->|Behavioral Scorer 40%| F[Timing Matrix ML]
-    D -->|Context Scorer 20%| G[IP/Geo Analysis]
+    F -->|Risk < 0.25| G[✅ ALLOW]
+    F -->|Risk > 0.50| H[⚠️ OTP CHALLENGE]
+    F -->|Risk > 0.75| I[🚫 BLOCK / BIOMETRIC]
     
-    D -->|Final Score < 0.3| H[🟢 ALLOW Transaction]
-    D -->|Final Score 0.3 - 0.7| I[🟡 OTP / Video-KYC Challenge]
-    D -->|Final Score > 0.7| J[🔴 BLOCK & Freeze Account]
+    G --> J[(Bank Core System)]
+```
+
+### The 3 Core Pillars of KAVACH:
+1. **Behavioral Biometrics:** Tracks Hold Time (how long keys are pressed) and Inter-Key Interval (rhythm between keys). Attackers typing a stolen password type fundamentally differently than the real user.
+2. **Device & Haptic Sensors:** Calculates Mouse Entropy to detect the micro-stutters indicative of AnyDesk/TeamViewer remote desktop lag. Also reads Gyroscope data to detect if a mobile device is lying perfectly flat (bot behavior).
+3. **Ledger Intelligence (KLI):** The "Deepak vs Albert" model. Kavach dynamically understands if a ₹25,000 transaction is completely normal for a high-spender (Albert) or a 60x anomaly for a frugal user (Deepak), and checks the payee's historical trust network.
+
+---
+
+## 🛠️ Technical Stack
+- **Backend:** Python, FastAPI, SQLAlchemy, SQLite (for demo)
+- **Frontend:** Vanilla HTML/CSS, JavaScript (Zero dependencies for max speed)
+- **Machine Learning:** Statistical Z-Score Anomaly Detection, Welford's Online Algorithm for Variance
+- **Security:** JWT Auth, Canvas Fingerprinting, Bcrypt Password Hashing
+
+---
+
+## 🚀 Current Status & Features
+- [x] **Behavioral SDK:** Captures typing patterns and mouse entropy in real-time.
+- [x] **Risk Engine:** Fuses Behavioral, Device, and Ledger data into a 0.0 - 1.0 composite risk score.
+- [x] **Interactive Dashboard:** Users can see their real-time session security score.
+- [x] **Automated Defense:** Blocks high-value transactions to unknown recipients when typing patterns don't match.
+- [x] **Live Matrix Terminal:** Backend logs beautifully display the exact ML reasoning for every allowed/blocked action.
+
+---
+
+## 🔮 Future Scope & Banking Integration
+Kavach is designed to be easily integrated into existing banking apps:
+- **Federated Learning:** Instead of sending raw keystrokes to the server, we will deploy lightweight TensorFlow.js models on the edge (browser/mobile). The server only receives encrypted weight updates, maximizing DPDP compliance.
+- **Siamese Neural Networks:** Replace Z-Score with Few-Shot Learning models to authenticate users with even fewer baseline sessions.
+- **FIDO2 / WebAuthn:** Integrate hardware-backed passkeys for frictionless step-up authentication.
+
+---
+
+## 📁 Folder Architecture
+
+```text
+Kavach/
+├── backend/
+│   ├── main.py                   # FastAPI Application & Routes
+│   ├── models.py                 # Database Schema (Users, Txns, Profiles)
+│   ├── schemas.py                # Pydantic validation schemas
+│   ├── risk_engine/              
+│   │   ├── behavioral_scorer.py  # Keystroke & Sensor ML logic
+│   │   ├── transaction_scorer.py # Financial anomaly logic (KLI)
+│   │   └── composite_scorer.py   # Sensor Fusion aggregator
+│   └── enrollment/
+│       └── enrollment_manager.py # Graduating new users to active models
+├── frontend/                     # Vanilla HTML/JS Dashboard & UI
+│   ├── index.html
+│   ├── dashboard.html
+│   ├── send-money.html
+│   └── js/
+│       ├── kavach-sdk.js         # The Edge Data Collector
+│       └── utils.js
+├── docs/                         # Detailed architecture and pitch notes
+├── start_kavach.py               # Main CLI Entry Point & Demo Runner
+├── seed_demo_data.py             # Generates the 4-friends financial histories
+└── advanced_test_kavach.py       # Automated QA Attack Scripts
 ```
 
 ---
 
-## 💻 Tech Stack
-| Component | Technology |
-| :--- | :--- |
-| **Backend API** | FastAPI (Python 3.11), Uvicorn |
-| **Database** | SQLite (SQLAlchemy ORM) |
-| **Security/Crypto** | bcrypt, python-jose (JWT), DPDP-compliant one-way hashing |
-| **Frontend UI** | HTML5, CSS3 (Glassmorphism), Vanilla JavaScript |
-| **Risk Engine** | Custom Python mathematical baseline arrays (Z-Score normalization) |
+## 💻 How to Start the Project
 
----
+1. **Install Dependencies:**
+   Ensure you have Python 3.9+ installed. Run:
+   ```bash
+   pip install fastapi uvicorn sqlalchemy pydantic passlib bcrypt python-jose colorama requests
+   ```
 
-## 🛠️ How to Run the Demo
+2. **Launch the Kavach Engine:**
+   Run the master script to open the interactive menu:
+   ```bash
+   python start_kavach.py
+   ```
 
-**1. Clone the Repository:**
-```bash
-git clone <repository-url>
-cd Kavach
-```
-
-**2. Start the Interactive CLI Wizard:**
-We built a custom CLI wrapper specifically for the PSB Hackathon demonstration.
-```bash
-python start_kavach.py
-```
-*   The script will prompt you to automatically install all dependencies (`pip install`).
-*   It will boot the Uvicorn server and dynamically log all ML Risk Engine evaluations directly to the terminal.
-
-**3. Test the Application:**
-*   Visit `http://localhost:8000` in your browser.
-*   Click **Enroll New User** to begin the Phase 1 Baseline gathering.
-
----
-
-<div align="center">
-  <i>"Securing India's digital future, one keystroke at a time."</i>
-</div>
+3. **Demo Walkthrough:**
+   - **Step 1:** Select `Option 3` first to seed the database with synthetic financial histories (The "4 Friends" Demo).
+   - **Step 2:** Select `Option 2` to run the automated Hacker vs Good User attack simulations in your terminal.
+   - **Step 3:** Select `Option 1` to boot the Live Web Server. Open `http://localhost:8000` in your browser. Try logging in as `deepak@kavach` (password: `deepak123`) and watch the interactive ML terminal analyze your keystrokes!
