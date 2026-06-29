@@ -97,7 +97,48 @@ def login_user(login_data: UserLogin, db: Session = Depends(get_db)):
 
     logger.info(f"Running Risk Engine. User Enrollment Phase: {user.enrollment_phase}")
     logger.info(f"{Fore.MAGENTA}[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...{Style.RESET_ALL}")
-    
+    logger.info("=" * 60)
+    logger.info("KAVACH BEHAVIORAL ANALYSIS")
+
+    logger.info(f"User: {login_data.username}")
+
+    logger.info(
+        f"Hold Mean: {login_data.behavioral_data.hold_mean} ms"
+    )
+
+    logger.info(
+        f"Hold Std: {login_data.behavioral_data.hold_std} ms"
+    )
+
+    logger.info(
+        f"IKI Mean: {login_data.behavioral_data.iki_mean} ms"
+    )
+
+    logger.info(
+        f"IKI Std: {login_data.behavioral_data.iki_std} ms"
+    )
+
+    logger.info(
+        f"Backspaces: {login_data.behavioral_data.backspace_count}"
+    )
+
+    logger.info(
+        f"Hesitation: {login_data.behavioral_data.hesitation_ms} ms"
+    )
+
+    logger.info(
+        f"Mouse Entropy: {login_data.behavioral_data.mouse_entropy}"
+    )
+
+    logger.info(
+        f"Gyro Angle: {login_data.behavioral_data.gyro_angle}"
+    )
+
+    logger.info(
+        f"Transaction Amount: {login_data.behavioral_data.transaction_amount}"
+    )
+
+    logger.info("=" * 60)
     # 3. Run the KAVACH Risk Engine
     score, reasons = calculate_composite_risk(
         user=user,
