@@ -16,7 +16,7 @@
             <div class="glass-panel">
                 <h2 style="color: var(--primary); text-align: center; margin-bottom: 1.5rem;">💸 Send Money</h2>
                 
-                <form id="transferForm" onsubmit="event.preventDefault(); alert('Demo: Transaction securely processed by KAVACH!'); window.location.href='dashboard.html';">
+                <form id="transferForm" onsubmit="return processTransfer(event)">
                     <div class="form-group">
                         <label for="payee">Payee UPI ID / Account</label>
                         <input type="text" id="payee" placeholder="merchant@upi" required>
@@ -46,12 +46,38 @@
     
     <script src="js/utils.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const user = utils.getUser();
-            if(!user) {
-                window.location.href = 'login.html';
-            }
-        });
-    </script>
+        function processTransfer(event) {
+            event.preventDefault();
+
+           const payee = document.getElementById('payee').value;
+           const amount = document.getElementById('amount').value;
+           const mpin = document.getElementById('mpin').value;
+
+         // Demo MPIN validation
+           if (mpin !== "123456") {
+               alert("Invalid MPIN");
+               return false;
+          }
+
+           // Demo KAVACH risk evaluation
+           const riskScore = 0.12;
+
+           alert(
+               `Transaction Approved\n\nPayee: ${payee}\nAmount: ₹${amount}\nRisk Score: ${riskScore}`
+           );
+
+           window.location.href = 'dashboard.html';
+
+           return false;
+     }
+
+     document.addEventListener('DOMContentLoaded', () => {
+        const user = utils.getUser();
+
+        if (!user) {
+            window.location.href = 'login.html';
+        }
+    });
+</script>
 </body>
 </html>
