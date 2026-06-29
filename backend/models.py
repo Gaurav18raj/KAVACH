@@ -42,8 +42,12 @@ class BehavioralBaseline(Base):
     # Statistical moments representing the "Behavioral DNA"
     hold_mean = Column(Float, default=0.0)
     hold_std = Column(Float, default=0.0)
+    hold_samples = Column(String, default="[]") # JSON string for raw samples during enrollment
+    
     iki_mean = Column(Float, default=0.0)
     iki_std = Column(Float, default=0.0)
+    iki_samples = Column(String, default="[]")  # JSON string for raw samples during enrollment
+    
     typing_speed_cps = Column(Float, default=0.0)
     mouse_entropy_avg = Column(Float, default=0.0)
     

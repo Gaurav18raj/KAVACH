@@ -24,6 +24,7 @@ class BehavioralData(BaseModel):
     iki_std: float
     mouse_entropy: Optional[float] = 0.0      # Advanced Sensor Fusion
     gyro_angle: Optional[float] = 0.0         # Advanced Sensor Fusion
+    gyro_available: Optional[bool] = False    # Distinguish desktop vs mobile
     transaction_amount: Optional[float] = 0.0 # Hierarchical UPI Scaling
     backspace_count: int
     hesitation_ms: float
@@ -38,6 +39,13 @@ class DeviceData(BaseModel):
 class UserLogin(BaseModel):
     username: str
     password: str
+    behavioral_data: BehavioralData
+    device: DeviceData
+
+class TransactionRequest(BaseModel):
+    username: str
+    payee_upi: str
+    amount: float
     behavioral_data: BehavioralData
     device: DeviceData
 

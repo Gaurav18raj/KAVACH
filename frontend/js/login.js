@@ -49,7 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (data.access_granted) {
                     utils.setToken(data.session_token);
-                    utils.setUser({ username: username });
+                    utils.setUser({ 
+                        username: username,
+                        last_risk_score: data.risk_score,
+                        last_risk_level: data.risk_level
+                    });
                     
                     // Show success briefly before redirecting
                     btn.style.backgroundColor = "var(--accent)";
@@ -61,9 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     // Handled based on Action
                     if (data.action === "OTP_CHALLENGE") {
-                        utils.showError('errorMsg', `[RISK: MEDIUM] Unusual behavior detected. OTP Challenge required.`);
-                    } else if (data.action === "BIOMETRIC_STEP_UP") {
-                        utils.showError('errorMsg', `[RISK: HIGH] Suspicious behavior. Fingerprint required.`);
+                        utils.showError('errorMsg', `[RISK: CHALLENGE] Unusual behavior detected. OTP Challenge required.`);
                     } else {
                         utils.showError('errorMsg', `[RISK: CRITICAL] Access Blocked. ${data.reasons.join(', ')}`);
                     }

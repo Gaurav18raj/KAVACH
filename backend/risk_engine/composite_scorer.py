@@ -16,7 +16,7 @@ from .context_scorer import score_context
 #    - If user is in PRODUCTION: We use the full 4-pillar risk formula.
 # 3. Aggregates all human-readable reasons for the Audit Trail / Security Dashboard.
 
-def calculate_composite_risk(user, current_behavior, current_device, baseline_dna, trusted_devices):
+def calculate_composite_risk(user, current_behavior, current_device, baseline_dna, trusted_devices, failed_login_count=0):
     """
     [ADVANCED RISK SCORING ALGORITHM]
     Role: Orchestrates the calculation of the final risk score by fusing multiple intelligence streams.
@@ -62,15 +62,25 @@ def calculate_composite_risk(user, current_behavior, current_device, baseline_dn
         all_reasons.append(f"INFO: Low-Value UPI Transaction (₹{transaction_amount}). Behavioral ML bypassed for <0.01s latency.")
     else:
         # FULL ML PRODUCTION MODE (Standard logins or High-Value transfers >= ₹2000)
-        b_score, b_reasons = score_behavior(current_behavior, baseline_dna)
-        all_reasons.extend(b_reasons)
+        if baseline_dna is None:
+            # Fallback if DB is missing the baseline row despite not being in enrollment phase
+            composite_score = (ENROLL_WEIGHT_DEVICE * d_score) + (ENROLL_WEIGHT_CONTEXT * c_score)
+            all_reasons.append("WARNING: Behavioral DNA missing. Falling back to Device/Context only.")
+            b_score = 0.0
+            b_reasons = []
+        else:
+            b_score, b_reasons = score_behavior(current_behavior, baseline_dna)
+            all_reasons.extend(b_reasons)
         
         if transaction_amount >= 50000:
              all_reasons.append(f"WARNING: High-Value Transaction (₹{transaction_amount}). Enforcing maximum Sensor Fusion rigor.")
 
         # Formula: 0.40(B) + 0.25(D) + 0.20(C) + 0.15(F)
-        # Note: Failed login scorer is mocked as 0 for this immediate login flow MVP
-        f_score = 0.0 
+        
+        # Calculate failed login penalty (f_score)
+        f_score = min(failed_login_count * 0.33, 1.0) # 3 failed attempts in last 15 mins = max penalty
+        if f_score > 0:
+            all_reasons.append(f"WARNING: {failed_login_count} recent failed attempts or high-risk events.")
         
         composite_score = (
             (WEIGHT_BEHAVIORAL * b_score) +
@@ -95,10 +105,10 @@ def determine_action(score):
     Maps the composite score to a risk level and a concrete action.
     """
     if score < 0.25:
-        return "LOW", "ALLOW"
+        return "SAFE", "ALLOW"
     elif score < 0.50:
-        return "MEDIUM", "OTP_CHALLENGE"
+        return "MONITOR", "ALLOW"
     elif score < 0.72:
-        return "HIGH", "BIOMETRIC_STEP_UP"
+        return "CHALLENGE", "OTP_CHALLENGE"
     else:
         return "CRITICAL", "BLOCK"

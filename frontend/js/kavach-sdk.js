@@ -27,14 +27,47 @@ class KavachSDK {
     }
 
     getDeviceFingerprint() {
-        // Mock fingerprinting
+        // Generate and cache canvas fingerprint
+        let canvasHash = localStorage.getItem('kavach_canvas_hash');
+        if (!canvasHash) {
+            canvasHash = this.generateCanvasFingerprint();
+            localStorage.setItem('kavach_canvas_hash', canvasHash);
+        }
+
         return {
             userAgent: navigator.userAgent,
             screenRes: `${window.screen.width}x${window.screen.height}`,
             timezoneOffset: new Date().getTimezoneOffset(),
             language: navigator.language,
-            canvasHash: "mock_canvas_hash_" + Math.floor(Math.random() * 1000)
+            canvasHash: canvasHash
         };
+    }
+
+    generateCanvasFingerprint() {
+        try {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.textBaseline = "top";
+            ctx.font = "14px 'Arial'";
+            ctx.textBaseline = "alphabetic";
+            ctx.fillStyle = "#f60";
+            ctx.fillRect(125,1,62,20);
+            ctx.fillStyle = "#069";
+            ctx.fillText("KavachFingerprint2024", 2, 15);
+            ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
+            ctx.fillText("KavachFingerprint2024", 4, 17);
+            
+            const dataUrl = canvas.toDataURL();
+            
+            // Simple djb2 hash
+            let hash = 5381;
+            for (let i = 0; i < dataUrl.length; i++) {
+                hash = ((hash << 5) + hash) + dataUrl.charCodeAt(i);
+            }
+            return "kavach_" + Math.abs(hash).toString(16);
+        } catch (e) {
+            return "kavach_fallback_hash";
+        }
     }
 
     initListeners() {
@@ -99,11 +132,8 @@ class KavachSDK {
 
     // Call this before sending API requests
     getPayload(transactionAmount = 0.0) {
-        // For the Hackathon Demo, if running on Desktop where gyro doesn't exist, we send 0.001 to mock a flat device
-        let finalGyro = this.sessionData.haptics.gyroAngle;
-        if (finalGyro === 0.0) {
-             finalGyro = 0.001; 
-        }
+        const hasGyro = this.sessionData.haptics.gyroAngle !== 0.0;
+        const finalGyro = this.sessionData.haptics.gyroAngle;
 
         return {
             timestamp: Date.now(),
@@ -116,6 +146,7 @@ class KavachSDK {
                 hesitation_ms: this.sessionData.keystrokes.hesitationMs,
                 mouse_entropy: parseFloat(this.sessionData.haptics.mouseEntropy.toFixed(2)),
                 gyro_angle: parseFloat(finalGyro.toFixed(3)),
+                gyro_available: hasGyro,
                 transaction_amount: transactionAmount
             },
             device: this.sessionData.device

@@ -7,13 +7,15 @@ import os
 import logging
 import colorama
 from colorama import Fore, Style
+from datetime import datetime, timedelta
 
 from .database import engine, Base, get_db
 from .models import User, LoginLog, DeviceFingerprint, BehavioralBaseline
-from .schemas import UserRegister, UserLogin, RiskResponse, UserProfile
+from .schemas import UserRegister, UserLogin, TransactionRequest, RiskResponse, UserProfile
 from .auth import get_password_hash, verify_password, create_access_token
 from .risk_engine.composite_scorer import calculate_composite_risk, determine_action
 from .enrollment.enrollment_manager import process_enrollment_event
+from .config import ENROLLMENT_SESSIONS
 
 # Initialize colorama
 colorama.init(autoreset=True)
@@ -114,6 +116,14 @@ if not user or not verify_password(
     # 2. Fetch ML Baselines
     baseline = db.query(BehavioralBaseline).filter(BehavioralBaseline.user_id == user.id).first()
     trusted_devices = db.query(DeviceFingerprint).filter(DeviceFingerprint.user_id == user.id).all()
+    
+    # Calculate failed logins in the last 15 minutes
+    time_threshold = datetime.utcnow() - timedelta(minutes=15)
+    failed_login_count = db.query(LoginLog).filter(
+        LoginLog.user_id == user.id,
+        LoginLog.action_taken != "ALLOW",
+        LoginLog.timestamp >= time_threshold
+    ).count()
 
     logger.info(f"Running Risk Engine. User Enrollment Phase: {user.enrollment_phase}")
     logger.info(f"{Fore.MAGENTA}[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...{Style.RESET_ALL}")
@@ -165,7 +175,8 @@ if not user or not verify_password(
         current_behavior=login_data.behavioral_data,
         current_device=login_data.device,
         baseline_dna=baseline,
-        trusted_devices=trusted_devices
+        trusted_devices=trusted_devices,
+        failed_login_count=failed_login_count
     )
 
     # 4. Map Score to Response Action
@@ -217,6 +228,92 @@ if not user or not verify_password(
         reasons=reasons,
         session_token=token
     )
+
+# --- TRANSACTION ENDPOINT ---
+@app.post("/api/v1/transaction", response_model=RiskResponse)
+def process_transaction(tx_data: TransactionRequest, db: Session = Depends(get_db)):
+    logger.info(f"Transaction attempt by: {tx_data.username} for amount: {tx_data.amount}")
+    
+    user = db.query(User).filter(User.username == tx_data.username).first()
+    if not user:
+        raise HTTPException(status_code=401, detail="User not found")
+
+    baseline = db.query(BehavioralBaseline).filter(BehavioralBaseline.user_id == user.id).first()
+    trusted_devices = db.query(DeviceFingerprint).filter(DeviceFingerprint.user_id == user.id).all()
+    
+    time_threshold = datetime.utcnow() - timedelta(minutes=15)
+    failed_login_count = db.query(LoginLog).filter(
+        LoginLog.user_id == user.id,
+        LoginLog.action_taken != "ALLOW",
+        LoginLog.timestamp >= time_threshold
+    ).count()
+
+    # Apply 1.3x weight scrutiny if amount is above 50,000 as per feedback
+    if tx_data.amount > 50000:
+        logger.info(f"{Fore.YELLOW}High-Value Transfer ({tx_data.amount}). Applying 1.3x behavioral weight scrutiny.{Style.RESET_ALL}")
+        # Note: the actual weight logic is inside composite_scorer.py. We will just pass the transaction_amount
+        # to the behavioral data so the scorer knows to apply it.
+    
+    score, reasons = calculate_composite_risk(
+        user=user,
+        current_behavior=tx_data.behavioral_data,
+        current_device=tx_data.device,
+        baseline_dna=baseline,
+        trusted_devices=trusted_devices,
+        failed_login_count=failed_login_count
+    )
+
+    risk_level, action = determine_action(score)
+    
+    if action == "ALLOW":
+        color = Fore.GREEN
+    elif action == "OTP_CHALLENGE":
+        color = Fore.YELLOW
+    else:
+        color = Fore.RED
+        
+    logger.info(f"Tx Risk Score: {color}{score}{Style.RESET_ALL} | Action: {color}{action}{Style.RESET_ALL}")
+
+    return RiskResponse(
+        access_granted=(action == "ALLOW"),
+        risk_score=score,
+        risk_level=risk_level,
+        action=action,
+        reasons=reasons,
+        session_token=None
+    )
+
+@app.get("/api/v1/balance")
+def get_balance(username: str):
+    # Mock balance endpoint for the demo
+    return {"username": username, "balance": 84250.00}
+
+@app.get("/api/v1/user/logs")
+def get_user_logs(username: str, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.username == username).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    logs = db.query(LoginLog).filter(LoginLog.user_id == user.id).order_by(LoginLog.timestamp.desc()).limit(10).all()
+    return [{"timestamp": l.timestamp, "score": l.composite_score, "level": l.risk_level, "action": l.action_taken, "reasons": l.reasons} for l in logs]
+
+@app.get("/api/v1/user/dna")
+def get_user_dna(username: str, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.username == username).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    baseline = db.query(BehavioralBaseline).filter(BehavioralBaseline.user_id == user.id).first()
+    
+    if user.enrollment_phase:
+        status = f"Enrolling ({user.session_count}/{ENROLLMENT_SESSIONS})"
+    else:
+        status = "Active"
+        
+    return {
+        "status": status,
+        "hold_mean": baseline.hold_mean if baseline else 0,
+        "iki_mean": baseline.iki_mean if baseline else 0,
+        "trusted_devices_count": db.query(DeviceFingerprint).filter(DeviceFingerprint.user_id == user.id).count()
+    }
 
 # --- STATIC FILE SERVING ---
 # Mount the frontend directory so we don't need a separate server

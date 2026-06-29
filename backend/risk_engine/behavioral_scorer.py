@@ -56,9 +56,10 @@ def score_behavior(current_features, baseline_dna):
 
     # 4. Sensor Fusion: Gyroscope Haptics (Bot / Remote Access Check)
     gyro = getattr(current_features, 'gyro_angle', 0.0)
+    gyro_available = getattr(current_features, 'gyro_available', False)
+    
     # If gyro is completely perfectly 0 (and they didn't just fail to grant permission), it's suspicious for a mobile device.
-    # For this MVP, if gyro is provided and is exactly 0.0, we flag it.
-    if gyro == 0.001: # We'll send 0.001 from frontend to indicate flat phone.
+    if gyro_available and abs(gyro) < 0.005: 
         z_scores.append(2.5)
         reasons.append("WARNING: Device is perfectly flat during typing. Possible automated bot or remote access.")
 

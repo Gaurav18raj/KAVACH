@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 from ..models import User, BehavioralBaseline
 from ..config import ENROLLMENT_SESSIONS
+import json
+import statistics
 
 # ==========================================
 # KAVACH BACKEND: Enrollment Manager
@@ -29,27 +31,50 @@ def process_enrollment_event(db: Session, user: User, behavioral_data):
         db.commit()
         db.refresh(baseline)
 
-    # 2. Incremental Mean Calculation for MVP
-    # In a real app, you would store all raw events in a database and compute the true 
-    # population mean and std deviation. For this fast hackathon MVP, we use a simple
-    # rolling average approximation.
-    current_count = user.session_count
+    # 2. Store Raw Samples
+    try:
+        hold_samples = json.loads(baseline.hold_samples) if baseline.hold_samples else []
+    except:
+        hold_samples = []
+    
+    try:
+        iki_samples = json.loads(baseline.iki_samples) if baseline.iki_samples else []
+    except:
+        iki_samples = []
 
-    # New Mean = (OldMean * OldCount + NewValue) / (OldCount + 1)
+    hold_samples.append(behavioral_data.hold_mean)
+    iki_samples.append(behavioral_data.iki_mean)
+
+    baseline.hold_samples = json.dumps(hold_samples)
+    baseline.iki_samples = json.dumps(iki_samples)
+
+    # Update Rolling Mean
+    current_count = user.session_count
     baseline.hold_mean = ((baseline.hold_mean * current_count) + behavioral_data.hold_mean) / (current_count + 1)
     baseline.iki_mean = ((baseline.iki_mean * current_count) + behavioral_data.iki_mean) / (current_count + 1)
     
-    # We fake the standard deviation updating for the MVP to avoid storing large arrays.
-    # We assign a default variance that the user will be judged against.
-    baseline.hold_std = 15.0 # assume +/- 15ms consistency is normal
-    baseline.iki_std = 25.0  # assume +/- 25ms consistency is normal
-
     # 3. Increment Session Count
     user.session_count += 1
     
-    # 4. Phase Gate Check
+    # 4. Phase Gate Check (Graduation)
     if user.session_count >= ENROLLMENT_SESSIONS:
-        # User has graduated! Welcome to Production Continuous Auth.
         user.enrollment_phase = False
+        
+        # Calculate actual population standard deviation based on collected samples
+        if len(hold_samples) > 1:
+            baseline.hold_std = statistics.stdev(hold_samples)
+        else:
+            baseline.hold_std = 15.0 # fallback
+
+        if len(iki_samples) > 1:
+            baseline.iki_std = statistics.stdev(iki_samples)
+        else:
+            baseline.iki_std = 25.0 # fallback
+
+        # To avoid hyper-sensitivity if the user typed perfectly identically:
+        if baseline.hold_std < 5.0:
+            baseline.hold_std = 5.0
+        if baseline.iki_std < 5.0:
+            baseline.iki_std = 5.0
 
     db.commit()

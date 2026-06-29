@@ -45,18 +45,7 @@ const utils = {
 
     // Display debug info on screen if debug panel exists
     logDebug(title, data) {
-        let panel = document.getElementById('debugPanel');
-        if (!panel) {
-            panel = document.createElement('div');
-            panel.id = 'debugPanel';
-            panel.className = 'debug-panel';
-            document.body.appendChild(panel);
-        }
-
-        const formattedData = JSON.stringify(data, null, 2);
-        panel.innerHTML = `
-            <div class="debug-title">${title}</div>
-            <pre style="white-space: pre-wrap; word-wrap: break-word; color: #a5b4fc;">${formattedData}</pre>
-        `;
+        console.log(`%c[KAVACH DEBUG] %c${title}`, "color: #069; font-weight: bold;", "color: inherit;");
+        console.log(data);
     }
 };

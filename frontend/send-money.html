@@ -16,7 +16,7 @@
             <div class="glass-panel">
                 <h2 style="color: var(--primary); text-align: center; margin-bottom: 1.5rem;">💸 Send Money</h2>
                 
-                <form id="transferForm" onsubmit="return processTransfer(event)">
+                <form id="transferForm">
                     <div class="form-group">
                         <label for="payee">Payee UPI ID / Account</label>
                         <input type="text" id="payee" placeholder="merchant@upi" required>
@@ -38,46 +38,82 @@
                             placeholder="Enter 6-digit MPIN"
                             required>
                     </div>
-                    <button type="submit" class="btn" style="margin-top: 1rem;">Secure Transfer</button>
+                    
+                    <button type="submit" id="submitBtn" class="btn" style="margin-top: 1rem;">Secure Transfer</button>
+                    <p id="errorMsg" class="error hidden" style="margin-top: 1rem;"></p>
                 </form>
             </div>
         </main>
     </div>
     
     <script src="js/utils.js"></script>
+    <script src="js/kavach-sdk.js"></script>
     <script>
-        function processTransfer(event) {
-            event.preventDefault();
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = utils.getUser();
+            if(!user) {
+                window.location.href = 'login.html';
+                return;
+            }
 
-           const payee = document.getElementById('payee').value;
-           const amount = document.getElementById('amount').value;
-           const mpin = document.getElementById('mpin').value;
+            document.getElementById('transferForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                utils.hideError('errorMsg');
 
-         // Demo MPIN validation
-           if (mpin !== "123456") {
-               alert("Invalid MPIN");
-               return false;
-          }
+                const mpin = document.getElementById('mpin').value;
+                if (mpin !== "123456") {
+                    utils.showError('errorMsg', 'Invalid MPIN');
+                    return;
+                }
 
-           // Demo KAVACH risk evaluation
-           const riskScore = 0.12;
+                const btn = document.getElementById('submitBtn');
+                const originalText = btn.textContent;
+                btn.textContent = "Verifying Transaction...";
+                btn.disabled = true;
 
-           alert(
-               `Transaction Approved\n\nPayee: ${payee}\nAmount: ₹${amount}\nRisk Score: ${riskScore}`
-           );
+                const amount = parseFloat(document.getElementById('amount').value);
+                const payee = document.getElementById('payee').value;
 
-           window.location.href = 'dashboard.html';
+                // Grab behavior just for this form session
+                const behavioralPayload = window.Kavach.getPayload(amount);
 
-           return false;
-     }
+                try {
+                    const response = await fetch(`${API_BASE_URL}/transaction`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            username: user.username,
+                            payee_upi: payee,
+                            amount: amount,
+                            behavioral_data: behavioralPayload.behavioral_data,
+                            device: behavioralPayload.device
+                        })
+                    });
 
-     document.addEventListener('DOMContentLoaded', () => {
-        const user = utils.getUser();
+                    const data = await response.json();
 
-        if (!user) {
-            window.location.href = 'login.html';
-        }
-    });
-</script>
+                    if (!response.ok) {
+                        utils.showError('errorMsg', data.detail || "Transaction failed.");
+                    } else if (data.access_granted) {
+                        alert(`Transaction Successful!\nRisk Score: ${data.risk_score}`);
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        // Handled based on Action
+                        if (data.action === "OTP_CHALLENGE") {
+                            utils.showError('errorMsg', `[RISK: CHALLENGE] Unusual behavior detected. OTP Challenge required.`);
+                        } else {
+                            utils.showError('errorMsg', `[RISK: CRITICAL] Transaction Blocked. ${data.reasons.join(', ')}`);
+                        }
+                    }
+                } catch (error) {
+                    console.error("Tx Error:", error);
+                    utils.showError('errorMsg', "Server error. Is the backend running?");
+                } finally {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }
+            });
+        });
+    </script>
 </body>
 </html>

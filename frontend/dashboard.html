@@ -26,7 +26,7 @@
                 </div>
                 <div style="text-align: right;">
                     <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">Current Risk Score</span>
-                    <span class="status-badge status-low" style="font-size: 1.2rem; margin-top: 0.25rem;">0.12 - SAFE</span>
+                    <span id="riskBadge" class="status-badge" style="font-size: 1.2rem; margin-top: 0.25rem; padding: 0.25rem 0.75rem; border-radius: 0.5rem; display: inline-block;">0.12 - SAFE</span>
                 </div>
             </div>
 
@@ -43,9 +43,9 @@
                     <p>Mobile, DTH, Fastag, Electricity.</p>
                 </a>
 
-                <a href="#" class="card glass-panel" style="text-decoration: none; color: inherit; transition: transform 0.2s;">
+                <a href="#" id="checkBalanceBtn" class="card glass-panel" style="text-decoration: none; color: inherit; transition: transform 0.2s; cursor: pointer;">
                     <h3 style="color: var(--primary);">💳 Check Balance</h3>
-                    <p>View account statements and balance.</p>
+                    <p id="balanceDisplay">View account statements and balance.</p>
                 </a>
 
                 <a href="security.html" class="card glass-panel" style="text-decoration: none; color: inherit; transition: transform 0.2s; border: 1px solid var(--warning);">
@@ -64,12 +64,41 @@
                 window.location.href = 'login.html';
             } else {
                 document.getElementById('userGreeting').textContent = `Welcome, ${user.username}`;
+                
+                const score = user.last_risk_score !== undefined ? user.last_risk_score : 0.0;
+                const level = user.last_risk_level || 'UNKNOWN';
+                
+                let badgeColor = 'var(--success)';
+                if (level === 'MONITOR') badgeColor = 'var(--success)'; // Monitor is still visually OK for user
+                if (level === 'CHALLENGE') badgeColor = 'var(--warning)';
+                if (level === 'CRITICAL') badgeColor = 'var(--error)';
+
+                document.getElementById('riskBadge').textContent = `${level} (${score})`;
+                document.getElementById('riskBadge').style.backgroundColor = badgeColor;
             }
 
             document.getElementById('logoutBtn').addEventListener('click', (e) => {
                 e.preventDefault();
                 utils.clearToken();
                 window.location.href = 'index.html';
+            });
+
+            document.getElementById('checkBalanceBtn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                const display = document.getElementById('balanceDisplay');
+                display.textContent = "Fetching...";
+                
+                try {
+                    const response = await fetch(`${API_BASE_URL}/balance?username=${encodeURIComponent(user.username)}`);
+                    const data = await response.json();
+                    if(response.ok) {
+                        display.innerHTML = `<strong style="font-size: 1.2rem; color: var(--success);">₹ ${data.balance.toLocaleString('en-IN', {minimumFractionDigits: 2})}</strong>`;
+                    } else {
+                        display.textContent = "Error fetching balance.";
+                    }
+                } catch(err) {
+                    display.textContent = "Network error.";
+                }
             });
         });
     </script>

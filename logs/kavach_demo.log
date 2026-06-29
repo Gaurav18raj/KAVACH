@@ -13,3 +13,206 @@
 2026-06-26 15:40:20,439 - [INFO] - [36m[INFO][0m Risk Score: [33m0.35[0m | Level: [33mMEDIUM[0m | Action: [33mOTP_CHALLENGE[0m
 2026-06-26 15:40:20,439 - [INFO] - [36m[INFO][0m   -> Reason: First time evaluating device on this account
 2026-06-26 15:40:20,439 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:12:52,083 - [INFO] - [36m[INFO][0m Registration attempt for: deepak_1782470570@upi
+2026-06-26 16:12:52,353 - [INFO] - [36m[INFO][0m [32mSuccessfully registered deepak_1782470570@upi. Initiating Enrollment Phase.[0m
+2026-06-26 16:12:54,407 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470570@upi
+2026-06-26 16:12:54,647 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:12:54,647 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:12:54,648 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:12:54,648 - [INFO] - [36m[INFO][0m   -> Reason: First device login - implicitly trusted and added to baseline.
+2026-06-26 16:12:54,648 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:12:56,720 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470570@upi
+2026-06-26 16:12:57,069 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:12:57,069 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:12:57,069 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:12:57,069 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:12:59,113 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470570@upi
+2026-06-26 16:12:59,395 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:12:59,396 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:12:59,396 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:12:59,396 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:13:01,453 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470570@upi
+2026-06-26 16:13:01,686 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:13:01,687 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:13:01,687 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:13:01,687 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:13:03,732 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470570@upi
+2026-06-26 16:13:03,979 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:13:03,979 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:13:03,979 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:13:03,979 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:13:06,014 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470570@upi
+2026-06-26 16:13:06,269 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-26 16:13:06,269 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:13:06,269 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:13:06,269 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Low-Value UPI Transaction (₹500.0). Behavioral ML bypassed for <0.01s latency.
+2026-06-26 16:13:43,627 - [INFO] - [36m[INFO][0m Registration attempt for: deepak_1782470621@upi
+2026-06-26 16:13:43,962 - [INFO] - [36m[INFO][0m [32mSuccessfully registered deepak_1782470621@upi. Initiating Enrollment Phase.[0m
+2026-06-26 16:13:46,002 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470621@upi
+2026-06-26 16:13:46,253 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:13:46,253 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:13:46,254 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:13:46,254 - [INFO] - [36m[INFO][0m   -> Reason: First device login - implicitly trusted and added to baseline.
+2026-06-26 16:13:46,254 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:13:48,309 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470621@upi
+2026-06-26 16:13:48,571 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:13:48,572 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:13:48,572 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:13:48,572 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:13:50,607 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470621@upi
+2026-06-26 16:13:50,863 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:13:50,864 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:13:50,864 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:13:50,864 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:13:52,910 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470621@upi
+2026-06-26 16:13:53,245 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:13:53,246 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:13:53,246 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:13:53,246 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:13:55,280 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470621@upi
+2026-06-26 16:13:55,551 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:13:55,552 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:13:55,552 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:13:55,552 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:13:57,587 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470621@upi
+2026-06-26 16:13:57,863 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-26 16:13:57,863 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:13:57,864 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:13:57,864 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Low-Value UPI Transaction (₹500.0). Behavioral ML bypassed for <0.01s latency.
+2026-06-26 16:13:59,917 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470621@upi
+2026-06-26 16:14:00,151 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-26 16:14:00,152 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:14:00,152 - [INFO] - [36m[INFO][0m Risk Score: [32m0.05[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:14:00,152 - [INFO] - [36m[INFO][0m   -> Reason: WARNING: High-Value Transaction (₹65000.0). Enforcing maximum Sensor Fusion rigor.
+2026-06-26 16:14:00,152 - [INFO] - [36m[INFO][0m   -> Reason: All signals normal. Rhythm matches Behavioral DNA.
+2026-06-26 16:14:02,237 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470621@upi
+2026-06-26 16:14:02,468 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-26 16:14:02,468 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:14:02,468 - [INFO] - [36m[INFO][0m Risk Score: [31m0.65[0m | Level: [31mHIGH[0m | Action: [31mBIOMETRIC_STEP_UP[0m
+2026-06-26 16:14:02,468 - [INFO] - [36m[INFO][0m   -> Reason: Unrecognized device fingerprint detected
+2026-06-26 16:14:02,468 - [INFO] - [36m[INFO][0m   -> Reason: Device matches NO known historical devices
+2026-06-26 16:14:02,470 - [INFO] - [36m[INFO][0m   -> Reason: Typing hold time is highly unusual (Z-Score: 10.7)
+2026-06-26 16:14:02,470 - [INFO] - [36m[INFO][0m   -> Reason: Typing rhythm (IKI) deviates significantly from baseline (Z-Score: 14.0)
+2026-06-26 16:14:02,471 - [INFO] - [36m[INFO][0m   -> Reason: CRITICAL: High Mouse Entropy (150.0). Possible Remote Desktop (AnyDesk) latency detected.
+2026-06-26 16:14:02,471 - [INFO] - [36m[INFO][0m   -> Reason: WARNING: Device is perfectly flat during typing. Possible automated bot or remote access.
+2026-06-26 16:14:02,471 - [INFO] - [36m[INFO][0m   -> Reason: WARNING: High-Value Transaction (₹99000.0). Enforcing maximum Sensor Fusion rigor.
+2026-06-26 16:15:22,257 - [INFO] - [36m[INFO][0m Registration attempt for: deepak_1782470720@upi
+2026-06-26 16:15:22,605 - [INFO] - [36m[INFO][0m [32mSuccessfully registered deepak_1782470720@upi. Initiating Enrollment Phase.[0m
+2026-06-26 16:15:24,630 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470720@upi
+2026-06-26 16:15:24,942 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:15:24,942 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:15:24,942 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:15:24,942 - [INFO] - [36m[INFO][0m   -> Reason: First device login - implicitly trusted and added to baseline.
+2026-06-26 16:15:24,942 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:15:27,006 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470720@upi
+2026-06-26 16:15:27,301 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:15:27,301 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:15:27,301 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:15:27,301 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:15:29,401 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470720@upi
+2026-06-26 16:15:29,669 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:15:29,670 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:15:29,670 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:15:29,670 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:15:31,712 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470720@upi
+2026-06-26 16:15:32,003 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:15:32,003 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:15:32,004 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:15:32,004 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:15:34,046 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470720@upi
+2026-06-26 16:15:34,352 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 16:15:34,352 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:15:34,353 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:15:34,353 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 16:15:36,423 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470720@upi
+2026-06-26 16:15:36,726 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-26 16:15:36,726 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:15:36,726 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:15:36,726 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Low-Value UPI Transaction (₹500.0). Behavioral ML bypassed for <0.01s latency.
+2026-06-26 16:15:38,768 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470720@upi
+2026-06-26 16:15:39,011 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-26 16:15:39,011 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:15:39,012 - [INFO] - [36m[INFO][0m Risk Score: [32m0.05[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 16:15:39,012 - [INFO] - [36m[INFO][0m   -> Reason: WARNING: High-Value Transaction (₹65000.0). Enforcing maximum Sensor Fusion rigor.
+2026-06-26 16:15:39,012 - [INFO] - [36m[INFO][0m   -> Reason: All signals normal. Rhythm matches Behavioral DNA.
+2026-06-26 16:15:41,059 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782470720@upi
+2026-06-26 16:15:41,398 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-26 16:15:41,399 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 16:15:41,399 - [INFO] - [36m[INFO][0m Risk Score: [31m0.95[0m | Level: [31mCRITICAL[0m | Action: [31mBLOCK[0m
+2026-06-26 16:15:41,400 - [INFO] - [36m[INFO][0m   -> Reason: Unrecognized device fingerprint detected
+2026-06-26 16:15:41,400 - [INFO] - [36m[INFO][0m   -> Reason: Device matches NO known historical devices
+2026-06-26 16:15:41,400 - [INFO] - [36m[INFO][0m   -> Reason: Typing hold time is highly unusual (Z-Score: 10.7)
+2026-06-26 16:15:41,400 - [INFO] - [36m[INFO][0m   -> Reason: Typing rhythm (IKI) deviates significantly from baseline (Z-Score: 14.0)
+2026-06-26 16:15:41,400 - [INFO] - [36m[INFO][0m   -> Reason: CRITICAL: High Mouse Entropy (150.0). Possible Remote Desktop (AnyDesk) latency detected.
+2026-06-26 16:15:41,400 - [INFO] - [36m[INFO][0m   -> Reason: WARNING: Device is perfectly flat during typing. Possible automated bot or remote access.
+2026-06-26 16:15:41,400 - [INFO] - [36m[INFO][0m   -> Reason: WARNING: High-Value Transaction (₹99000.0). Enforcing maximum Sensor Fusion rigor.
+2026-06-26 16:15:41,400 - [INFO] - [36m[INFO][0m   -> Reason: ZERO-TRUST OVERRIDE: Critical sensor anomalies bypass standard ML formula.
+2026-06-26 21:01:45,658 - [INFO] - [36m[INFO][0m Registration attempt for: himans@upi
+2026-06-26 21:01:46,256 - [INFO] - [36m[INFO][0m [32mSuccessfully registered himans@upi. Initiating Enrollment Phase.[0m
+2026-06-26 21:03:03,746 - [INFO] - [36m[INFO][0m Registration attempt for: him@123
+2026-06-26 21:03:04,298 - [INFO] - [36m[INFO][0m [32mSuccessfully registered him@123. Initiating Enrollment Phase.[0m
+2026-06-26 21:03:17,462 - [INFO] - [36m[INFO][0m Login attempt for: hima@123
+2026-06-26 21:03:17,467 - [WARNING] - [33m[WARN][0m [31mLogin Failed: Invalid credentials for hima@123[0m
+2026-06-26 21:04:46,670 - [INFO] - [36m[INFO][0m Registration attempt for: him@123
+2026-06-26 21:04:46,680 - [WARNING] - [33m[WARN][0m Registration failed: User him@123 already exists.
+2026-06-26 21:05:05,306 - [INFO] - [36m[INFO][0m Login attempt for: him@123
+2026-06-26 21:05:05,831 - [WARNING] - [33m[WARN][0m [31mLogin Failed: Invalid credentials for him@123[0m
+2026-06-26 21:06:21,408 - [INFO] - [36m[INFO][0m Registration attempt for: him@upi
+2026-06-26 21:06:21,964 - [INFO] - [36m[INFO][0m [32mSuccessfully registered him@upi. Initiating Enrollment Phase.[0m
+2026-06-26 21:06:33,214 - [INFO] - [36m[INFO][0m Login attempt for: him@upi
+2026-06-26 21:06:33,829 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 21:06:33,829 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 21:06:33,830 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 21:06:33,831 - [INFO] - [36m[INFO][0m   -> Reason: First device login - implicitly trusted and added to baseline.
+2026-06-26 21:06:33,831 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 21:08:25,066 - [INFO] - [36m[INFO][0m Registration attempt for: deepak_1782488302@upi
+2026-06-26 21:08:25,458 - [INFO] - [36m[INFO][0m [32mSuccessfully registered deepak_1782488302@upi. Initiating Enrollment Phase.[0m
+2026-06-26 21:08:27,512 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782488302@upi
+2026-06-26 21:08:27,885 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 21:08:27,885 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 21:08:27,885 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 21:08:27,885 - [INFO] - [36m[INFO][0m   -> Reason: First device login - implicitly trusted and added to baseline.
+2026-06-26 21:08:27,885 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 21:08:29,982 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782488302@upi
+2026-06-26 21:08:30,348 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 21:08:30,348 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 21:08:30,348 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 21:08:30,348 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 21:08:32,411 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782488302@upi
+2026-06-26 21:08:32,780 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 21:08:32,780 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 21:08:32,780 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 21:08:32,780 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 21:08:34,852 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782488302@upi
+2026-06-26 21:08:35,248 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 21:08:35,248 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 21:08:35,248 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 21:08:35,249 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 21:08:37,331 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782488302@upi
+2026-06-26 21:08:37,698 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-26 21:08:37,698 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 21:08:37,698 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 21:08:37,698 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-26 21:08:39,766 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782488302@upi
+2026-06-26 21:08:40,142 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-26 21:08:40,142 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 21:08:40,142 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 21:08:40,142 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Low-Value UPI Transaction (₹500.0). Behavioral ML bypassed for <0.01s latency.
+2026-06-26 21:08:42,178 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782488302@upi
+2026-06-26 21:08:42,529 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-26 21:08:42,530 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 21:08:42,530 - [INFO] - [36m[INFO][0m Risk Score: [32m0.05[0m | Level: [32mLOW[0m | Action: [32mALLOW[0m
+2026-06-26 21:08:42,530 - [INFO] - [36m[INFO][0m   -> Reason: WARNING: High-Value Transaction (₹65000.0). Enforcing maximum Sensor Fusion rigor.
+2026-06-26 21:08:42,530 - [INFO] - [36m[INFO][0m   -> Reason: All signals normal. Rhythm matches Behavioral DNA.
+2026-06-26 21:08:44,592 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782488302@upi
+2026-06-26 21:08:44,940 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-26 21:08:44,941 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-26 21:08:44,941 - [INFO] - [36m[INFO][0m Risk Score: [31m0.95[0m | Level: [31mCRITICAL[0m | Action: [31mBLOCK[0m
+2026-06-26 21:08:44,941 - [INFO] - [36m[INFO][0m   -> Reason: Unrecognized device fingerprint detected
+2026-06-26 21:08:44,941 - [INFO] - [36m[INFO][0m   -> Reason: Device matches NO known historical devices
+2026-06-26 21:08:44,941 - [INFO] - [36m[INFO][0m   -> Reason: Typing hold time is highly unusual (Z-Score: 10.7)
+2026-06-26 21:08:44,941 - [INFO] - [36m[INFO][0m   -> Reason: Typing rhythm (IKI) deviates significantly from baseline (Z-Score: 14.0)
+2026-06-26 21:08:44,941 - [INFO] - [36m[INFO][0m   -> Reason: CRITICAL: High Mouse Entropy (150.0). Possible Remote Desktop (AnyDesk) latency detected.
+2026-06-26 21:08:44,941 - [INFO] - [36m[INFO][0m   -> Reason: WARNING: Device is perfectly flat during typing. Possible automated bot or remote access.
+2026-06-26 21:08:44,941 - [INFO] - [36m[INFO][0m   -> Reason: WARNING: High-Value Transaction (₹99000.0). Enforcing maximum Sensor Fusion rigor.
+2026-06-26 21:08:44,941 - [INFO] - [36m[INFO][0m   -> Reason: ZERO-TRUST OVERRIDE: Critical sensor anomalies bypass standard ML formula.
