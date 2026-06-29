@@ -83,10 +83,23 @@ def register_user(user_in: UserRegister, db: Session = Depends(get_db)):
 
 @app.post("/api/v1/login", response_model=RiskResponse)
 def login_user(login_data: UserLogin, db: Session = Depends(get_db)):
-    logger.info(f"Login attempt for: {login_data.username}")
+    
     
     # 1. Traditional Credential Check
     user = db.query(User).filter(User.username == login_data.username).first()
+    if user:
+    logger.info(f"Customer Name: {user.full_name}")
+    logger.info(f"UPI ID: {user.username}")
+    logger.info(f"Device Hash: {login_data.device.canvasHash}")
+    logger.info(f"Login attempt for: {login_data.username}")
+
+    logger.info(
+        f"Customer Name: {user.full_name if user else 'Unknown'}"
+    )
+
+    logger.info(
+        f"Device Hash: {login_data.device.canvasHash}"
+    )
     if not user or not verify_password(login_data.password, user.hashed_password):
         logger.warning(f"{Fore.RED}Login Failed: Invalid credentials for {login_data.username}{Style.RESET_ALL}")
         raise HTTPException(status_code=401, detail="Invalid credentials")
