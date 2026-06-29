@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Get behavioral data from the Kavach SDK
             const behavioralPayload = window.Kavach.getPayload(txAmount);
-            utils.logDebug("Sending Payload to KAVACH Engine:", behavioralPayload);
+            console.log("Sending Payload to KAVACH Engine:", behavioralPayload);
 
             const requestBody = {
                 username: username,
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                utils.logDebug("API Risk Decision:", data);
+                console.log("API Risk Decision:", data);
 
                 if (data.access_granted) {
                     utils.setToken(data.session_token);
