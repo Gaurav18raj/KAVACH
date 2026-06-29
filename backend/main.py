@@ -87,7 +87,8 @@ def login_user(login_data: UserLogin, db: Session = Depends(get_db)):
     
     # 1. Traditional Credential Check
     user = db.query(User).filter(User.username == login_data.username).first()
-    if user:
+    
+if user:
     logger.info(f"Customer Name: {user.full_name}")
     logger.info(f"UPI ID: {user.username}")
     logger.info(f"Device Hash: {login_data.device.canvasHash}")
