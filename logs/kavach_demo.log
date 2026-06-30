@@ -1028,3 +1028,329 @@
 2026-06-30 10:19:49,176 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/user/logs - [32m200[0m (16.64ms)
 2026-06-30 10:21:21,525 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/user/dna - [32m200[0m (9.78ms)
 2026-06-30 10:21:21,552 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/user/logs - [32m200[0m (12.00ms)
+2026-06-30 22:36:53,398 - [INFO] - [36m[INFO][0m Login attempt for: deepak@upi
+2026-06-30 22:36:53,398 - [INFO] - [36m[INFO][0m Customer Name: Deepak
+2026-06-30 22:36:53,398 - [INFO] - [36m[INFO][0m UPI ID: deepak@upi
+2026-06-30 22:36:53,398 - [INFO] - [36m[INFO][0m Device Hash: kavach_1f995b0b06
+2026-06-30 22:36:53,902 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-30 22:36:53,902 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:36:53,902 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:36:53,902 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:36:53,902 - [INFO] - [36m[INFO][0m User: deepak@upi
+2026-06-30 22:36:53,904 - [INFO] - [36m[INFO][0m Hold Mean: 189.0 ms
+2026-06-30 22:36:53,904 - [INFO] - [36m[INFO][0m Hold Std: 43.0 ms
+2026-06-30 22:36:53,904 - [INFO] - [36m[INFO][0m IKI Mean: 0.0 ms
+2026-06-30 22:36:53,904 - [INFO] - [36m[INFO][0m IKI Std: 0.0 ms
+2026-06-30 22:36:53,904 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 22:36:53,904 - [INFO] - [36m[INFO][0m Hesitation: 2725.0 ms
+2026-06-30 22:36:53,904 - [INFO] - [36m[INFO][0m Mouse Entropy: 19.97
+2026-06-30 22:36:53,904 - [INFO] - [36m[INFO][0m Gyro Angle: 0.0
+2026-06-30 22:36:53,904 - [INFO] - [36m[INFO][0m Transaction Amount: 1500.0
+2026-06-30 22:36:53,904 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:36:53,908 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 22:36:53,908 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Low-Value UPI Transaction (₹1500.0). Behavioral ML bypassed for <0.01s latency.
+2026-06-30 22:36:54,002 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (753.62ms)
+2026-06-30 22:37:49,258 - [INFO] - [36m[INFO][0m Transaction attempt by: deepak@upi for amount: 50.0
+2026-06-30 22:37:49,326 - [INFO] - [36m[INFO][0m Tx Risk Score: [32m0.0[0m | Action: [32mALLOW[0m
+2026-06-30 22:37:49,328 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/transaction - [32m200[0m (69.95ms)
+2026-06-30 22:38:00,276 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/balance - [32m200[0m (25.58ms)
+2026-06-30 22:38:06,963 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/user/dna - [32m200[0m (20.41ms)
+2026-06-30 22:38:07,018 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/user/logs - [32m200[0m (28.77ms)
+2026-06-30 22:38:11,522 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/user/dna - [32m200[0m (9.77ms)
+2026-06-30 22:38:11,537 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/user/logs - [32m200[0m (12.84ms)
+2026-06-30 22:39:02,628 - [INFO] - [36m[INFO][0m Registration attempt for: alpha@upi
+2026-06-30 22:39:03,175 - [INFO] - [36m[INFO][0m [32mSuccessfully registered alpha@upi. Initiating Enrollment Phase.[0m
+2026-06-30 22:39:03,178 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/register - [32m201[0m (558.20ms)
+2026-06-30 22:39:21,663 - [INFO] - [36m[INFO][0m Login attempt for: alpha@upi
+2026-06-30 22:39:21,663 - [INFO] - [36m[INFO][0m Customer Name: Alpha
+2026-06-30 22:39:21,663 - [INFO] - [36m[INFO][0m UPI ID: alpha@upi
+2026-06-30 22:39:21,663 - [INFO] - [36m[INFO][0m Device Hash: kavach_1f995b0b06
+2026-06-30 22:39:22,206 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-30 22:39:22,208 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:39:22,208 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:39:22,208 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:39:22,208 - [INFO] - [36m[INFO][0m User: alpha@upi
+2026-06-30 22:39:22,208 - [INFO] - [36m[INFO][0m Hold Mean: 146.0 ms
+2026-06-30 22:39:22,208 - [INFO] - [36m[INFO][0m Hold Std: 64.0 ms
+2026-06-30 22:39:22,212 - [INFO] - [36m[INFO][0m IKI Mean: 466.0 ms
+2026-06-30 22:39:22,212 - [INFO] - [36m[INFO][0m IKI Std: 477.0 ms
+2026-06-30 22:39:22,212 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 22:39:22,212 - [INFO] - [36m[INFO][0m Hesitation: 2449.0 ms
+2026-06-30 22:39:22,214 - [INFO] - [36m[INFO][0m Mouse Entropy: 0.0
+2026-06-30 22:39:22,214 - [INFO] - [36m[INFO][0m Gyro Angle: 0.0
+2026-06-30 22:39:22,214 - [INFO] - [36m[INFO][0m Transaction Amount: 1500.0
+2026-06-30 22:39:22,214 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:39:22,216 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 22:39:22,216 - [INFO] - [36m[INFO][0m   -> Reason: First device login - implicitly trusted and added to baseline.
+2026-06-30 22:39:22,218 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-30 22:39:22,279 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (621.10ms)
+2026-06-30 22:40:05,028 - [INFO] - [36m[INFO][0m Login attempt for: alpha@upi
+2026-06-30 22:40:05,028 - [INFO] - [36m[INFO][0m Customer Name: Alpha
+2026-06-30 22:40:05,031 - [INFO] - [36m[INFO][0m UPI ID: alpha@upi
+2026-06-30 22:40:05,031 - [INFO] - [36m[INFO][0m Device Hash: kavach_1f995b0b06
+2026-06-30 22:40:05,609 - [WARNING] - [33m[WARN][0m [31mLogin Failed: Invalid credentials for alpha@upi[0m
+2026-06-30 22:40:05,609 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [31m401[0m (586.80ms)
+2026-06-30 22:40:11,642 - [INFO] - [36m[INFO][0m Login attempt for: alpha@upi
+2026-06-30 22:40:11,642 - [INFO] - [36m[INFO][0m Customer Name: Alpha
+2026-06-30 22:40:11,642 - [INFO] - [36m[INFO][0m UPI ID: alpha@upi
+2026-06-30 22:40:11,642 - [INFO] - [36m[INFO][0m Device Hash: kavach_1f995b0b06
+2026-06-30 22:40:12,228 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-30 22:40:12,228 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:40:12,228 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:40:12,228 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:40:12,231 - [INFO] - [36m[INFO][0m User: alpha@upi
+2026-06-30 22:40:12,231 - [INFO] - [36m[INFO][0m Hold Mean: 145.0 ms
+2026-06-30 22:40:12,231 - [INFO] - [36m[INFO][0m Hold Std: 37.0 ms
+2026-06-30 22:40:12,231 - [INFO] - [36m[INFO][0m IKI Mean: 407.0 ms
+2026-06-30 22:40:12,231 - [INFO] - [36m[INFO][0m IKI Std: 435.0 ms
+2026-06-30 22:40:12,231 - [INFO] - [36m[INFO][0m Backspaces: 2
+2026-06-30 22:40:12,231 - [INFO] - [36m[INFO][0m Hesitation: 1800.0 ms
+2026-06-30 22:40:12,236 - [INFO] - [36m[INFO][0m Mouse Entropy: 0.0
+2026-06-30 22:40:12,236 - [INFO] - [36m[INFO][0m Gyro Angle: 0.0
+2026-06-30 22:40:12,236 - [INFO] - [36m[INFO][0m Transaction Amount: 1500.0
+2026-06-30 22:40:12,236 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:40:12,238 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 22:40:12,238 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-30 22:40:12,278 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (641.15ms)
+2026-06-30 22:40:14,938 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/balance - [32m200[0m (1.51ms)
+2026-06-30 22:41:20,810 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/balance - [32m200[0m (5.85ms)
+2026-06-30 22:42:29,994 - [INFO] - [36m[INFO][0m Registration attempt for: deepak_1782839547@upi
+2026-06-30 22:42:30,405 - [INFO] - [36m[INFO][0m [32mSuccessfully registered deepak_1782839547@upi. Initiating Enrollment Phase.[0m
+2026-06-30 22:42:30,406 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/register - [32m201[0m (417.66ms)
+2026-06-30 22:42:32,426 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782839547@upi
+2026-06-30 22:42:32,426 - [INFO] - [36m[INFO][0m Customer Name: Deepak Testing
+2026-06-30 22:42:32,426 - [INFO] - [36m[INFO][0m UPI ID: deepak_1782839547@upi
+2026-06-30 22:42:32,426 - [INFO] - [36m[INFO][0m Device Hash: good_hash_iphone
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m User: deepak_1782839547@upi
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m Hold Mean: 90.0 ms
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m Hold Std: 10.0 ms
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m IKI Mean: 150.0 ms
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m IKI Std: 20.0 ms
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m Hesitation: 100.0 ms
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m Mouse Entropy: 5.0
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m Gyro Angle: 45.0
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m Transaction Amount: 0.0
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m   -> Reason: First device login - implicitly trusted and added to baseline.
+2026-06-30 22:42:32,808 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-30 22:42:32,861 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (444.54ms)
+2026-06-30 22:42:34,906 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782839547@upi
+2026-06-30 22:42:34,906 - [INFO] - [36m[INFO][0m Customer Name: Deepak Testing
+2026-06-30 22:42:34,908 - [INFO] - [36m[INFO][0m UPI ID: deepak_1782839547@upi
+2026-06-30 22:42:34,908 - [INFO] - [36m[INFO][0m Device Hash: good_hash_iphone
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m User: deepak_1782839547@upi
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m Hold Mean: 90.0 ms
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m Hold Std: 10.0 ms
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m IKI Mean: 150.0 ms
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m IKI Std: 20.0 ms
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m Hesitation: 100.0 ms
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m Mouse Entropy: 5.0
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m Gyro Angle: 45.0
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m Transaction Amount: 0.0
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 22:42:35,334 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-30 22:42:35,355 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (454.97ms)
+2026-06-30 22:42:37,381 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782839547@upi
+2026-06-30 22:42:37,381 - [INFO] - [36m[INFO][0m Customer Name: Deepak Testing
+2026-06-30 22:42:37,381 - [INFO] - [36m[INFO][0m UPI ID: deepak_1782839547@upi
+2026-06-30 22:42:37,381 - [INFO] - [36m[INFO][0m Device Hash: good_hash_iphone
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m User: deepak_1782839547@upi
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m Hold Mean: 90.0 ms
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m Hold Std: 10.0 ms
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m IKI Mean: 150.0 ms
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m IKI Std: 20.0 ms
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m Hesitation: 100.0 ms
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m Mouse Entropy: 5.0
+2026-06-30 22:42:37,740 - [INFO] - [36m[INFO][0m Gyro Angle: 45.0
+2026-06-30 22:42:37,742 - [INFO] - [36m[INFO][0m Transaction Amount: 0.0
+2026-06-30 22:42:37,742 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:37,742 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 22:42:37,742 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-30 22:42:37,762 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (386.71ms)
+2026-06-30 22:42:39,794 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782839547@upi
+2026-06-30 22:42:39,794 - [INFO] - [36m[INFO][0m Customer Name: Deepak Testing
+2026-06-30 22:42:39,796 - [INFO] - [36m[INFO][0m UPI ID: deepak_1782839547@upi
+2026-06-30 22:42:39,796 - [INFO] - [36m[INFO][0m Device Hash: good_hash_iphone
+2026-06-30 22:42:40,161 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-30 22:42:40,161 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:42:40,161 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:40,161 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:42:40,161 - [INFO] - [36m[INFO][0m User: deepak_1782839547@upi
+2026-06-30 22:42:40,161 - [INFO] - [36m[INFO][0m Hold Mean: 90.0 ms
+2026-06-30 22:42:40,161 - [INFO] - [36m[INFO][0m Hold Std: 10.0 ms
+2026-06-30 22:42:40,161 - [INFO] - [36m[INFO][0m IKI Mean: 150.0 ms
+2026-06-30 22:42:40,161 - [INFO] - [36m[INFO][0m IKI Std: 20.0 ms
+2026-06-30 22:42:40,161 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 22:42:40,161 - [INFO] - [36m[INFO][0m Hesitation: 100.0 ms
+2026-06-30 22:42:40,163 - [INFO] - [36m[INFO][0m Mouse Entropy: 5.0
+2026-06-30 22:42:40,163 - [INFO] - [36m[INFO][0m Gyro Angle: 45.0
+2026-06-30 22:42:40,163 - [INFO] - [36m[INFO][0m Transaction Amount: 0.0
+2026-06-30 22:42:40,163 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:40,163 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 22:42:40,163 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-30 22:42:40,182 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (391.45ms)
+2026-06-30 22:42:42,214 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782839547@upi
+2026-06-30 22:42:42,214 - [INFO] - [36m[INFO][0m Customer Name: Deepak Testing
+2026-06-30 22:42:42,214 - [INFO] - [36m[INFO][0m UPI ID: deepak_1782839547@upi
+2026-06-30 22:42:42,214 - [INFO] - [36m[INFO][0m Device Hash: good_hash_iphone
+2026-06-30 22:42:42,550 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: True
+2026-06-30 22:42:42,550 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:42:42,550 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:42,550 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:42:42,550 - [INFO] - [36m[INFO][0m User: deepak_1782839547@upi
+2026-06-30 22:42:42,550 - [INFO] - [36m[INFO][0m Hold Mean: 90.0 ms
+2026-06-30 22:42:42,550 - [INFO] - [36m[INFO][0m Hold Std: 10.0 ms
+2026-06-30 22:42:42,550 - [INFO] - [36m[INFO][0m IKI Mean: 150.0 ms
+2026-06-30 22:42:42,552 - [INFO] - [36m[INFO][0m IKI Std: 20.0 ms
+2026-06-30 22:42:42,552 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 22:42:42,552 - [INFO] - [36m[INFO][0m Hesitation: 100.0 ms
+2026-06-30 22:42:42,552 - [INFO] - [36m[INFO][0m Mouse Entropy: 5.0
+2026-06-30 22:42:42,552 - [INFO] - [36m[INFO][0m Gyro Angle: 45.0
+2026-06-30 22:42:42,552 - [INFO] - [36m[INFO][0m Transaction Amount: 0.0
+2026-06-30 22:42:42,552 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:42,552 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 22:42:42,552 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Account in Enrollment Phase. Behavioral ML is muted.
+2026-06-30 22:42:42,573 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (360.61ms)
+2026-06-30 22:42:44,608 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782839547@upi
+2026-06-30 22:42:44,608 - [INFO] - [36m[INFO][0m Customer Name: Deepak Testing
+2026-06-30 22:42:44,608 - [INFO] - [36m[INFO][0m UPI ID: deepak_1782839547@upi
+2026-06-30 22:42:44,608 - [INFO] - [36m[INFO][0m Device Hash: good_hash_iphone
+2026-06-30 22:42:44,975 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-30 22:42:44,975 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:42:44,975 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:44,975 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:42:44,975 - [INFO] - [36m[INFO][0m User: deepak_1782839547@upi
+2026-06-30 22:42:44,975 - [INFO] - [36m[INFO][0m Hold Mean: 90.0 ms
+2026-06-30 22:42:44,975 - [INFO] - [36m[INFO][0m Hold Std: 10.0 ms
+2026-06-30 22:42:44,977 - [INFO] - [36m[INFO][0m IKI Mean: 150.0 ms
+2026-06-30 22:42:44,977 - [INFO] - [36m[INFO][0m IKI Std: 20.0 ms
+2026-06-30 22:42:44,977 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 22:42:44,977 - [INFO] - [36m[INFO][0m Hesitation: 100.0 ms
+2026-06-30 22:42:44,977 - [INFO] - [36m[INFO][0m Mouse Entropy: 5.0
+2026-06-30 22:42:44,977 - [INFO] - [36m[INFO][0m Gyro Angle: 45.0
+2026-06-30 22:42:44,977 - [INFO] - [36m[INFO][0m Transaction Amount: 500.0
+2026-06-30 22:42:44,977 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:44,977 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 22:42:44,977 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Low-Value UPI Transaction (₹500.0). Behavioral ML bypassed for <0.01s latency.
+2026-06-30 22:42:44,987 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (378.87ms)
+2026-06-30 22:42:47,009 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782839547@upi
+2026-06-30 22:42:47,009 - [INFO] - [36m[INFO][0m Customer Name: Deepak Testing
+2026-06-30 22:42:47,009 - [INFO] - [36m[INFO][0m UPI ID: deepak_1782839547@upi
+2026-06-30 22:42:47,009 - [INFO] - [36m[INFO][0m Device Hash: good_hash_iphone
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m User: deepak_1782839547@upi
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m Hold Mean: 90.0 ms
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m Hold Std: 10.0 ms
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m IKI Mean: 150.0 ms
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m IKI Std: 20.0 ms
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m Hesitation: 100.0 ms
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m Mouse Entropy: 5.0
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m Gyro Angle: 45.0
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m Transaction Amount: 65000.0
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m Risk Score: [32m0.05[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m   -> Reason: WARNING: High-Value Transaction (₹65000.0). Enforcing maximum Sensor Fusion rigor.
+2026-06-30 22:42:47,414 - [INFO] - [36m[INFO][0m   -> Reason: All signals normal. Rhythm matches Behavioral DNA.
+2026-06-30 22:42:47,434 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (423.42ms)
+2026-06-30 22:42:49,448 - [INFO] - [36m[INFO][0m Login attempt for: deepak_1782839547@upi
+2026-06-30 22:42:49,448 - [INFO] - [36m[INFO][0m Customer Name: Deepak Testing
+2026-06-30 22:42:49,448 - [INFO] - [36m[INFO][0m UPI ID: deepak_1782839547@upi
+2026-06-30 22:42:49,448 - [INFO] - [36m[INFO][0m Device Hash: hacker_canvas_hash
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m User: deepak_1782839547@upi
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m Hold Mean: 250.0 ms
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m Hold Std: 150.0 ms
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m IKI Mean: 500.0 ms
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m IKI Std: 300.0 ms
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m Backspaces: 5
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m Hesitation: 2500.0 ms
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m Mouse Entropy: 450.0
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m Gyro Angle: 0.001
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m Transaction Amount: 99000.0
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m Risk Score: [31m0.95[0m | Level: [31mCRITICAL[0m | Action: [31mBLOCK[0m
+2026-06-30 22:42:49,812 - [INFO] - [36m[INFO][0m   -> Reason: Unrecognized device fingerprint detected
+2026-06-30 22:42:49,818 - [INFO] - [36m[INFO][0m   -> Reason: Device matches NO known historical devices
+2026-06-30 22:42:49,818 - [INFO] - [36m[INFO][0m   -> Reason: Typing hold time is highly unusual (Z-Score: 32.0)
+2026-06-30 22:42:49,818 - [INFO] - [36m[INFO][0m   -> Reason: Typing rhythm (IKI) deviates significantly from baseline (Z-Score: 70.0)
+2026-06-30 22:42:49,818 - [INFO] - [36m[INFO][0m   -> Reason: CRITICAL: High Mouse Entropy (450.0). Possible Remote Desktop (AnyDesk) latency detected.
+2026-06-30 22:42:49,818 - [INFO] - [36m[INFO][0m   -> Reason: WARNING: High-Value Transaction (₹99000.0). Enforcing maximum Sensor Fusion rigor.
+2026-06-30 22:42:49,818 - [INFO] - [36m[INFO][0m   -> Reason: ZERO-TRUST OVERRIDE: Critical sensor anomalies bypass standard ML formula.
+2026-06-30 22:42:49,831 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (382.74ms)
+2026-06-30 22:43:04,208 - [INFO] - [36m[INFO][0m Login attempt for: deepak@upi
+2026-06-30 22:43:04,208 - [INFO] - [36m[INFO][0m Customer Name: Deepak
+2026-06-30 22:43:04,208 - [INFO] - [36m[INFO][0m UPI ID: deepak@upi
+2026-06-30 22:43:04,208 - [INFO] - [36m[INFO][0m Device Hash: mock_hash_deepak
+2026-06-30 22:43:04,592 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m User: deepak@upi
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m Hold Mean: 90.0 ms
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m Hold Std: 10.0 ms
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m IKI Mean: 150.0 ms
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m IKI Std: 20.0 ms
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m Hesitation: 100.0 ms
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m Mouse Entropy: 5.0
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m Gyro Angle: 45.0
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m Transaction Amount: 0.0
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m Risk Score: [32m0.21[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 22:43:04,594 - [INFO] - [36m[INFO][0m   -> Reason: Unrecognized device fingerprint detected
+2026-06-30 22:43:04,620 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (476.19ms)
+2026-06-30 22:43:05,634 - [INFO] - [36m[INFO][0m Transaction attempt by: deepak@upi for amount: 2500.0
+2026-06-30 22:43:05,655 - [INFO] - [36m[INFO][0m Tx Risk Score: [33m0.58[0m | Action: [33mOTP_CHALLENGE[0m
+2026-06-30 22:43:05,658 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/transaction - [32m200[0m (29.90ms)
+2026-06-30 22:43:05,669 - [INFO] - [36m[INFO][0m Login attempt for: albert@upi
+2026-06-30 22:43:05,669 - [INFO] - [36m[INFO][0m Customer Name: Albert
+2026-06-30 22:43:05,669 - [INFO] - [36m[INFO][0m UPI ID: albert@upi
+2026-06-30 22:43:05,669 - [INFO] - [36m[INFO][0m Device Hash: mock_hash_albert
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m User: albert@upi
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m Hold Mean: 90.0 ms
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m Hold Std: 10.0 ms
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m IKI Mean: 150.0 ms
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m IKI Std: 20.0 ms
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m Hesitation: 100.0 ms
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m Mouse Entropy: 5.0
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m Gyro Angle: 45.0
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m Transaction Amount: 0.0
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m Risk Score: [32m0.13[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 22:43:06,088 - [INFO] - [36m[INFO][0m   -> Reason: Unrecognized device fingerprint detected
+2026-06-30 22:43:06,098 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (434.33ms)
+2026-06-30 22:43:07,111 - [INFO] - [36m[INFO][0m Transaction attempt by: albert@upi for amount: 2500.0
+2026-06-30 22:43:07,134 - [INFO] - [36m[INFO][0m Tx Risk Score: [32m0.16[0m | Action: [32mALLOW[0m
+2026-06-30 22:43:07,138 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/transaction - [32m200[0m (29.67ms)
+2026-06-30 22:43:08,148 - [INFO] - [36m[INFO][0m Transaction attempt by: albert@upi for amount: 20000.0
+2026-06-30 22:43:08,160 - [INFO] - [36m[INFO][0m Tx Risk Score: [33m0.54[0m | Action: [33mOTP_CHALLENGE[0m
+2026-06-30 22:43:08,165 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/transaction - [32m200[0m (24.33ms)

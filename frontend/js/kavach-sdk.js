@@ -22,6 +22,7 @@ class KavachSDK {
         this.lastKeyDownTime = null;
         this.lastKeyUpTime = null;
         this.formStartTime = Date.now();
+        this.demoMode = 'normal'; // Can be 'normal' or 'jamtara'
         
         this.initListeners();
     }
@@ -139,8 +140,39 @@ class KavachSDK {
         });
     }
 
+    // Used for Hackathon Web UI demonstration
+    setDemoMode(mode) {
+        this.demoMode = mode;
+        console.log(`[KAVACH SDK] Demo mode set to: ${mode}`);
+    }
+
     // Call this before sending API requests
     getPayload(transactionAmount = 0.0) {
+        if (this.demoMode === 'jamtara') {
+            return {
+                timestamp: Date.now(),
+                behavioral_data: {
+                    hold_mean: 250.0,
+                    hold_std: 150.0, // Erratic, slow typing (hunting for keys)
+                    iki_mean: 500.0,
+                    iki_std: 300.0,
+                    backspace_count: 5,
+                    hesitation_ms: 2500.0,
+                    mouse_entropy: 450.0, // High AnyDesk Network Latency Jerks
+                    gyro_angle: 0.001,    // Phone lying perfectly flat on desk
+                    gyro_available: true,
+                    transaction_amount: transactionAmount
+                },
+                device: {
+                    userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 AnyDesk",
+                    screenRes: "1920x1080",
+                    timezoneOffset: -330,
+                    language: "en-US",
+                    canvasHash: "hacker_canvas_hash" // Unrecognized Device
+                }
+            };
+        }
+
         const hasGyro = this.sessionData.haptics.gyroAngle !== 0.0;
         const finalGyro = this.sessionData.haptics.gyroAngle;
 

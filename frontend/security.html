@@ -4,41 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KAVACH | Security Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .progress-bar {
+            width: 100%;
+            background-color: #e2e8f0;
+            border-radius: 999px;
+            height: 8px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            transition: width 0.5s ease;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <a href="dashboard.html" class="logo" style="font-size: 1.2rem;">⬅️ Back to Dashboard</a>
+            <a href="dashboard.html" class="logo" style="font-size: 1.1rem; gap: 0.25rem;">
+                <i data-lucide="arrow-left" class="icon"></i> Back to Dashboard
+            </a>
         </header>
 
-        <main style="margin-top: 2rem;">
-            <h2 style="color: var(--warning); margin-bottom: 1rem;">🛡️ Security Audit & DNA Profile</h2>
+        <main style="max-width: 800px; margin: 2rem auto;">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i data-lucide="shield-check" class="icon-lg"></i> Security & Behavioral DNA
+            </h2>
             
-            <div class="glass-panel" style="margin-bottom: 2rem; border-left: 4px solid var(--primary);">
-                <h3>Behavioral DNA Status: <span id="dnaStatus" style="color: var(--primary);">Loading...</span></h3>
-                <p>Your typing rhythm and device fingerprints are currently securing this session.</p>
+            <div class="card" style="margin-bottom: 2rem; border-left: 4px solid var(--accent);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <h3 style="margin-bottom: 0.25rem;">Behavioral Learning Phase</h3>
+                        <p style="margin-bottom: 0; font-size: 0.9rem; color: var(--text-muted);">
+                            KAVACH continuously adapts to your typing rhythm and device usage.
+                        </p>
+                    </div>
+                    <div>
+                        <span id="dnaStatusBadge" class="status-badge status-low">Loading...</span>
+                    </div>
+                </div>
+
+                <div id="enrollmentProgressContainer" class="hidden" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 600;">
+                        <span>Training Progress</span>
+                        <span id="enrollmentText">0 / 5 Logins</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="enrollmentFill" class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Behavioral ML interventions are muted until a reliable baseline is established.</p>
+                </div>
                 
-                <div style="display: flex; gap: 2rem; margin-top: 1rem;">
-                    <div>
-                        <small style="color: var(--text-muted); display: block;">Avg Hold Time</small>
-                        <strong id="holdMean">...</strong>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                    <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <i data-lucide="keyboard" style="color: var(--primary); margin-bottom: 0.5rem;"></i>
+                        <small style="color: var(--text-muted); display: block; font-weight: 600;">Avg Hold Time</small>
+                        <strong id="holdMean" style="font-size: 1.25rem;">-- ms</strong>
                     </div>
-                    <div>
-                        <small style="color: var(--text-muted); display: block;">Avg Key Interval</small>
-                        <strong id="ikiMean">...</strong>
+                    <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <i data-lucide="timer" style="color: var(--primary); margin-bottom: 0.5rem;"></i>
+                        <small style="color: var(--text-muted); display: block; font-weight: 600;">Avg Key Interval</small>
+                        <strong id="ikiMean" style="font-size: 1.25rem;">-- ms</strong>
                     </div>
-                    <div>
-                        <small style="color: var(--text-muted); display: block;">Trusted Devices</small>
-                        <strong id="devices">...</strong>
+                    <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <i data-lucide="smartphone" style="color: var(--primary); margin-bottom: 0.5rem;"></i>
+                        <small style="color: var(--text-muted); display: block; font-weight: 600;">Trusted Devices</small>
+                        <strong id="devices" style="font-size: 1.25rem;">--</strong>
                     </div>
                 </div>
             </div>
 
-            <h3>Recent Authentication Logs</h3>
-            <div class="glass-panel" style="padding: 0;">
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i data-lucide="scroll-text" class="icon"></i> Authentication Audit Log</h3>
+            <div class="card" style="padding: 0; overflow: hidden;">
                 <ul id="logsList" style="list-style: none; padding: 0; margin: 0;">
-                    <li style="padding: 1rem; text-align: center;">Loading logs...</li>
+                    <li style="padding: 1.5rem; text-align: center; color: var(--text-muted);">Loading logs...</li>
                 </ul>
             </div>
         </main>
@@ -46,6 +90,7 @@
     
     <script src="js/utils.js"></script>
     <script>
+        lucide.createIcons();
         document.addEventListener('DOMContentLoaded', async () => {
             const user = utils.getUser();
             if(!user) {
@@ -60,7 +105,29 @@
                 });
                 if (dnaResponse.ok) {
                     const dnaData = await dnaResponse.json();
-                    document.getElementById('dnaStatus').textContent = dnaData.status;
+                    
+                    const badge = document.getElementById('dnaStatusBadge');
+                    const statusText = dnaData.status; // e.g. "Active" or "Enrolling (3/5)"
+                    
+                    if (statusText.startsWith("Enrolling")) {
+                        badge.className = "status-badge status-medium";
+                        badge.innerHTML = `<i data-lucide="loader" class="icon" style="animation: spin 2s linear infinite;"></i> Training Mode`;
+                        
+                        document.getElementById('enrollmentProgressContainer').classList.remove('hidden');
+                        
+                        const match = statusText.match(/\((\d+)\/(\d+)\)/);
+                        if (match) {
+                            const current = parseInt(match[1]);
+                            const total = parseInt(match[2]);
+                            document.getElementById('enrollmentText').textContent = `${current} / ${total} Logins`;
+                            document.getElementById('enrollmentFill').style.width = `${(current / total) * 100}%`;
+                        }
+                    } else {
+                        badge.className = "status-badge status-low";
+                        badge.innerHTML = `<i data-lucide="check-circle" class="icon"></i> Fully Active`;
+                    }
+                    lucide.createIcons();
+
                     document.getElementById('holdMean').textContent = `${Math.round(dnaData.hold_mean)} ms`;
                     document.getElementById('ikiMean').textContent = `${Math.round(dnaData.iki_mean)} ms`;
                     document.getElementById('devices').textContent = dnaData.trusted_devices_count;
@@ -80,37 +147,63 @@
                     list.innerHTML = '';
                     
                     if (logsData.length === 0) {
-                        list.innerHTML = '<li style="padding: 1rem;">No logs found.</li>';
+                        list.innerHTML = '<li style="padding: 1.5rem; text-align: center; color: var(--text-muted);">No logs found.</li>';
                     }
 
                     logsData.forEach(log => {
                         const li = document.createElement('li');
-                        li.style = "padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between;";
+                        li.style = "padding: 1.5rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: flex-start;";
                         
                         const date = new Date(log.timestamp).toLocaleString();
                         
-                        let color = 'var(--success)';
-                        if (log.level === 'CHALLENGE') color = 'var(--warning)';
-                        if (log.level === 'CRITICAL') color = 'var(--error)';
+                        let color = 'var(--accent)';
+                        let icon = 'shield-check';
+                        if (log.level === 'CHALLENGE') {
+                            color = 'var(--warning)';
+                            icon = 'alert-triangle';
+                        }
+                        if (log.level === 'CRITICAL') {
+                            color = 'var(--danger)';
+                            icon = 'shield-alert';
+                        }
 
-                        // Truncate reasons if any
+                        // Parse reasons safely
                         let reasonHtml = '';
                         if (log.reasons && log.reasons !== '[]') {
-                             reasonHtml = `<div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">${log.reasons}</div>`;
+                            try {
+                                // Sometimes it's a string representation of a list, sometimes JSON
+                                let reasonsArr = log.reasons;
+                                if (typeof reasonsArr === 'string') {
+                                    reasonsArr = reasonsArr.replace(/'/g, '"');
+                                    reasonsArr = JSON.parse(reasonsArr);
+                                }
+                                if (Array.isArray(reasonsArr)) {
+                                    reasonHtml = `<ul style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted); padding-left: 1.2rem;">
+                                        ${reasonsArr.map(r => `<li style="margin-bottom: 0.25rem;">${r}</li>`).join('')}
+                                    </ul>`;
+                                } else {
+                                    reasonHtml = `<div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">${log.reasons}</div>`;
+                                }
+                            } catch(e) {
+                                reasonHtml = `<div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">${log.reasons}</div>`;
+                            }
                         }
 
                         li.innerHTML = `
-                            <div>
-                                <strong>${date}</strong>
+                            <div style="flex: 1; padding-right: 1rem;">
+                                <strong style="display: block; color: var(--primary);">${date}</strong>
                                 ${reasonHtml}
                             </div>
-                            <span style="color: ${color}; font-weight: bold; text-align: right;">
-                                ${log.action}<br>
-                                <small style="font-weight: normal; opacity: 0.8;">Risk: ${log.score}</small>
-                            </span>
+                            <div style="text-align: right; min-width: 100px;">
+                                <span style="display: inline-flex; align-items: center; gap: 0.25rem; color: ${color}; font-weight: 700; font-size: 0.9rem;">
+                                    <i data-lucide="${icon}" style="width: 14px; height: 14px;"></i> ${log.action}
+                                </span>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Risk Score: ${log.score.toFixed(2)}</div>
+                            </div>
                         `;
                         list.appendChild(li);
                     });
+                    lucide.createIcons();
                 }
             } catch (err) {
                 console.error("Error fetching logs", err);

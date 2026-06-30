@@ -18,6 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const txInput = document.getElementById('txAmount');
             const txAmount = txInput ? parseFloat(txInput.value) : 0.0;
             
+            const simulateJamtara = document.getElementById('simulateJamtara');
+            if (simulateJamtara && simulateJamtara.checked) {
+                window.Kavach.setDemoMode('jamtara');
+            } else {
+                window.Kavach.setDemoMode('normal');
+            }
+
             // Get behavioral data from the Kavach SDK
             const behavioralPayload = window.Kavach.getPayload(txAmount);
             console.log("Sending Payload to KAVACH Engine:", behavioralPayload);

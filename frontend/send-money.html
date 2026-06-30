@@ -42,6 +42,17 @@
                     
                     <div style="margin: 2rem 0; border-top: 1px dashed var(--border-color);"></div>
 
+                    <div class="form-group" style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px dashed #cbd5e1; margin-bottom: 2rem;">
+                        <label style="color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                            <i data-lucide="flask-conical" style="width: 18px; height: 18px;"></i> Hackathon Demo Scenarios
+                        </label>
+                        <select id="demoScenario" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; background: white; cursor: pointer;">
+                            <option value="normal">Normal Legitimate Transaction</option>
+                            <option value="kli_attack">Ledger Attack: Huge amount to unknown Payee</option>
+                            <option value="jamtara">Jamtara Attack: High Latency (AnyDesk) Override</option>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label for="mpin">Secure MPIN</label>
                         <input
@@ -91,8 +102,21 @@
                 lucide.createIcons();
                 btn.disabled = true;
 
-                const amount = parseFloat(document.getElementById('amount').value);
-                const payee = document.getElementById('payee').value;
+                let amount = parseFloat(document.getElementById('amount').value);
+                let payee = document.getElementById('payee').value;
+
+                // Handle Demo Scenarios
+                const scenario = document.getElementById('demoScenario').value;
+                if (scenario === 'kli_attack') {
+                    amount = 95000;
+                    payee = "fraudster99@upi";
+                    window.Kavach.setDemoMode('normal');
+                } else if (scenario === 'jamtara') {
+                    amount = 55000;
+                    window.Kavach.setDemoMode('jamtara');
+                } else {
+                    window.Kavach.setDemoMode('normal');
+                }
 
                 const behavioralPayload = window.Kavach.getPayload(amount);
 
