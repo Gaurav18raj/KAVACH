@@ -333,7 +333,7 @@ def get_balance(current_user: str = Depends(get_current_user), db: Session = Dep
     recent = db.query(TransactionHistory).filter(TransactionHistory.user_id == user.id).order_by(TransactionHistory.timestamp.desc()).limit(5).all()
     
     # Calculate balance based on starting 100000 minus all successful transactions
-    all_txns = db.query(TransactionHistory).filter(TransactionHistory.user_id == user.id, TransactionHistory.status == 'ALLOWED').all()
+    all_txns = db.query(TransactionHistory).filter(TransactionHistory.user_id == user.id).all()
     total_spent = sum([t.amount for t in all_txns])
     balance = 100000.0 - total_spent
     
@@ -341,7 +341,7 @@ def get_balance(current_user: str = Depends(get_current_user), db: Session = Dep
         "balance": balance,
         "currency": "INR",
         "account": user.username,
-        "recent_transactions": [{"amount": t.amount, "to": t.recipient_upi, "status": t.status} for t in recent]
+        "recent_transactions": [{"amount": t.amount, "to": t.recipient_upi, "status": "ALLOWED"} for t in recent]
     }
 
 @app.get("/api/v1/user/logs")

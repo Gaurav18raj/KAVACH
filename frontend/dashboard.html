@@ -3,78 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAVACH | Dashboard</title>
+    <title>KAVACH | Account Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <a href="index.html" class="logo">🛡️ KAVACH <span>Banking</span></a>
-            <div class="flex gap-4" style="align-items: center;">
-                <span id="userGreeting" style="font-weight: 500;">Welcome</span>
-                <a href="#" id="logoutBtn" class="btn btn-secondary" style="padding: 0.5rem 1rem;">Logout</a>
+            <a href="index.html" class="logo">
+                <i data-lucide="shield-check" class="icon-lg"></i>
+                KAVACH <span>Banking</span>
+            </a>
+            <div class="header-actions">
+                <div style="text-align: right;">
+                    <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">Logged in as</span>
+                    <strong id="userGreeting" style="font-weight: 600;">Welcome</strong>
+                </div>
+                <a href="#" id="logoutBtn" class="btn btn-secondary" style="padding: 0.5rem 1rem;">
+                    <i data-lucide="log-out" class="icon" style="width: 16px;"></i> Logout
+                </a>
             </div>
         </header>
 
-        <main style="margin-top: 2rem;">
-            
+        <main>
             <!-- Security Status Banner -->
-            <div class="glass-panel" style="padding: 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--accent);">
-                <div>
-                    <h3 style="margin-bottom: 0.25rem;">Continuous Auth Active</h3>
-                    <p style="margin-bottom: 0; font-size: 0.9rem;">Your session is being protected by KAVACH behavioral monitoring.</p>
+            <div class="security-banner">
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <div style="background: #e0e7ff; padding: 0.75rem; border-radius: 50%; color: var(--primary);">
+                        <i data-lucide="radar"></i>
+                    </div>
+                    <div>
+                        <h3 style="margin-bottom: 0.25rem;">Continuous Authentication Active</h3>
+                        <p style="margin-bottom: 0; font-size: 0.9rem;">Your session is actively monitored by KAVACH behavioral analytics.</p>
+                    </div>
                 </div>
                 <div style="text-align: right;">
-                    <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">Current Risk Score</span>
-                    <span id="riskBadge" class="status-badge" style="font-size: 1.2rem; margin-top: 0.25rem; padding: 0.25rem 0.75rem; border-radius: 0.5rem; display: inline-block;">0.12 - SAFE</span>
+                    <span style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Current Risk Assessment</span>
+                    <span id="riskBadge" class="status-badge status-low">
+                        <i data-lucide="check-circle" style="width: 14px;"></i> 0.00 - SAFE
+                    </span>
                 </div>
             </div>
 
-            <h2 style="margin-bottom: 1.5rem;">Quick Actions</h2>
+            <h2 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i data-lucide="layout-grid" class="icon" style="color: var(--primary);"></i> Quick Actions
+            </h2>
             
             <div class="grid">
-                <a href="send-money.html" class="card glass-panel" style="text-decoration: none; color: inherit; transition: transform 0.2s;">
-                    <h3 style="color: var(--primary);">💸 Send Money</h3>
-                    <p>Transfer funds via UPI/IMPS.</p>
+                <a href="send-money.html" class="card" style="text-decoration: none; color: inherit;">
+                    <h3><i data-lucide="send" style="color: var(--primary);"></i> Transfer Funds</h3>
+                    <p>Send money via NEFT, RTGS, or UPI instantly.</p>
                 </a>
                 
-                <a href="#" class="card glass-panel" style="text-decoration: none; color: inherit; transition: transform 0.2s;">
-                    <h3 style="color: var(--primary);">📱 Recharge & Pay Bills</h3>
-                    <p>Mobile, DTH, Fastag, Electricity.</p>
+                <a href="#" class="card" style="text-decoration: none; color: inherit;">
+                    <h3><i data-lucide="smartphone-charging" style="color: var(--primary);"></i> Recharge & Bills</h3>
+                    <p>Mobile, DTH, Fastag, and Utility Payments.</p>
                 </a>
 
-                <a href="#" id="checkBalanceBtn" class="card glass-panel" style="text-decoration: none; color: inherit; transition: transform 0.2s; cursor: pointer;">
-                    <h3 style="color: var(--primary);">💳 Check Balance</h3>
-                    <p id="balanceDisplay">View account statements and balance.</p>
+                <a href="#" id="checkBalanceBtn" class="card" style="text-decoration: none; color: inherit; cursor: pointer;">
+                    <h3><i data-lucide="wallet" style="color: var(--primary);"></i> Check Balance</h3>
+                    <p id="balanceDisplay">View your account balance and recent statements.</p>
                 </a>
 
-                <a href="security.html" class="card glass-panel" style="text-decoration: none; color: inherit; transition: transform 0.2s; border: 1px solid var(--warning);">
-                    <h3 style="color: var(--warning);">🛡️ Security Dashboard</h3>
-                    <p>View your Behavioral DNA profile and audit logs.</p>
+                <a href="security.html" class="card" style="text-decoration: none; color: inherit; border-color: var(--accent);">
+                    <h3 style="color: var(--accent);"><i data-lucide="shield-alert"></i> Security Hub</h3>
+                    <p>Audit your Behavioral DNA and trusted devices.</p>
                 </a>
             </div>
         </main>
     </div>
 
     <script src="js/utils.js"></script>
+    <script src="js/kavach-sdk.js"></script>
     <script>
+        lucide.createIcons();
+        
         document.addEventListener('DOMContentLoaded', () => {
             const user = utils.getUser();
             if(!user) {
                 window.location.href = 'login.html';
             } else {
-                document.getElementById('userGreeting').textContent = `Welcome, ${user.username}`;
+                document.getElementById('userGreeting').textContent = `${user.username}`;
                 
                 const score = user.last_risk_score !== undefined ? user.last_risk_score : 0.0;
                 const level = user.last_risk_level || 'UNKNOWN';
                 
-                let badgeColor = 'var(--success)';
-                if (level === 'MONITOR') badgeColor = 'var(--success)'; // Monitor is still visually OK for user
-                if (level === 'CHALLENGE') badgeColor = 'var(--warning)';
-                if (level === 'CRITICAL') badgeColor = 'var(--error)';
-
-                document.getElementById('riskBadge').textContent = `${level} (${score})`;
-                document.getElementById('riskBadge').style.backgroundColor = badgeColor;
+                const riskBadge = document.getElementById('riskBadge');
+                if (level === 'MONITOR' || level === 'ALLOW') {
+                    riskBadge.className = 'status-badge status-low';
+                    riskBadge.innerHTML = `<i data-lucide="check-circle" style="width: 14px;"></i> ${score.toFixed(2)} - SAFE`;
+                } else if (level === 'CHALLENGE') {
+                    riskBadge.className = 'status-badge status-medium';
+                    riskBadge.innerHTML = `<i data-lucide="alert-triangle" style="width: 14px;"></i> ${score.toFixed(2)} - CAUTION`;
+                } else {
+                    riskBadge.className = 'status-badge status-high';
+                    riskBadge.innerHTML = `<i data-lucide="x-circle" style="width: 14px;"></i> ${score.toFixed(2)} - CRITICAL`;
+                }
+                lucide.createIcons();
             }
 
             document.getElementById('logoutBtn').addEventListener('click', (e) => {
@@ -89,17 +115,17 @@
                 display.textContent = "Fetching...";
                 
                 try {
-                    const response = await fetch(`${API_BASE_URL}/balance?username=${encodeURIComponent(user.username)}`, {
+                    const response = await fetch(`${API_BASE_URL}/balance`, {
                         headers: { 'Authorization': `Bearer ${utils.getToken()}` }
                     });
                     const data = await response.json();
                     if(response.ok) {
-                        display.innerHTML = `<strong style="font-size: 1.2rem; color: var(--success);">₹ ${data.balance.toLocaleString('en-IN', {minimumFractionDigits: 2})}</strong>`;
+                        display.innerHTML = `<strong style="font-size: 1.5rem; color: var(--accent);">₹ ${data.balance.toLocaleString('en-IN', {minimumFractionDigits: 2})}</strong>`;
                     } else {
-                        display.textContent = "Error fetching balance.";
+                        display.textContent = "Session expired or error fetching balance.";
                     }
                 } catch(err) {
-                    display.textContent = "Network error.";
+                    display.textContent = "Network error while connecting to KAVACH Core.";
                 }
             });
         });

@@ -3,41 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAVACH | Login</title>
+    <title>KAVACH | Secure Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <a href="index.html" class="logo">🛡️ KAVACH <span>Banking</span></a>
+            <a href="index.html" class="logo">
+                <i data-lucide="shield-check" class="icon-lg"></i>
+                KAVACH <span>Banking</span>
+            </a>
         </header>
 
         <main>
-            <div class="glass-panel auth-container">
-                <h2 class="text-center">Welcome Back</h2>
-                <p class="text-center">Sign in to your KAVACH protected account</p>
+            <div class="card auth-container">
+                <div class="text-center" style="margin-bottom: 2rem;">
+                    <div style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; background: #e0e7ff; color: var(--primary); border-radius: 50%; margin-bottom: 1rem;">
+                        <i data-lucide="lock" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <h2>Secure NetBanking</h2>
+                    <p class="text-muted">Enter your credentials to access your account</p>
+                </div>
 
                 <form id="loginForm">
                     <div class="form-group">
-                        <label for="username">UPI ID / User ID</label>
-                        <input type="text" id="username" name="username" placeholder="e.g. ramesh@upi" required autocomplete="off">
+                        <label for="username">Customer ID / UPI ID</label>
+                        <input type="text" id="username" name="username" placeholder="e.g. deepak@upi" required autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <label for="password">Password / MPIN</label>
+                        <label for="password">Secure MPIN</label>
                         <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="off">
                     </div>
-                    <div class="form-group">
-                        <label for="txAmount">Transaction Amount (Demo Only)</label>
-                        <input type="number" id="txAmount" name="txAmount" placeholder="e.g. 500 (UPI) or 55000 (RTGS)" value="1500" required>
-                        <small style="color: #666; font-size: 0.8rem;">To demonstrate the Hierarchical Risk ML bypass for UPI vs Net Banking.</small>
+                    
+                    <!-- Only kept for Demo/Hackathon purposes -->
+                    <div class="form-group" style="background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px dashed #cbd5e1; margin-top: 2rem;">
+                        <label for="txAmount" style="color: var(--primary);"><i data-lucide="flask-conical" class="icon" style="vertical-align: middle; width: 16px;"></i> Hackathon Demo Settings</label>
+                        <input type="number" id="txAmount" name="txAmount" placeholder="e.g. 500" value="1500" required>
+                        <small style="color: var(--text-muted); font-size: 0.8rem; display: block; margin-top: 0.5rem;">Sets simulated transaction value during login to trigger KLI algorithms.</small>
                     </div>
                     
-                    <button type="submit" class="btn" id="submitBtn">Login Securely</button>
-                    <p id="errorMsg" class="mt-4 text-center hidden" style="color: var(--error); font-size: 0.9rem;"></p>
+                    <button type="submit" class="btn btn-primary" id="submitBtn" style="margin-top: 1.5rem;">
+                        <i data-lucide="log-in" class="icon"></i> Authenticate
+                    </button>
+                    <p id="errorMsg" class="error-msg hidden" style="margin-top: 1.5rem;"></p>
                 </form>
                 
                 <p class="text-center mt-4">
-                    New to Kavach? <a href="register.html" style="color: var(--primary);">Enroll now</a>
+                    New to KAVACH? <a href="register.html" class="link">Enroll your behavioral profile</a>
                 </p>
             </div>
         </main>
@@ -47,5 +61,6 @@
     <script src="js/kavach-sdk.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/login.js"></script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>

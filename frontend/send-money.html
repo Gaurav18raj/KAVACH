@@ -3,45 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KAVACH | Send Money</title>
+    <title>KAVACH | Fund Transfer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <a href="dashboard.html" class="logo" style="font-size: 1.2rem;">⬅️ Back to Dashboard</a>
+            <a href="dashboard.html" class="logo" style="font-size: 1.1rem; gap: 0.25rem;">
+                <i data-lucide="arrow-left" class="icon"></i> Back to Dashboard
+            </a>
         </header>
 
-        <main style="margin-top: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
-            <div class="glass-panel">
-                <h2 style="color: var(--primary); text-align: center; margin-bottom: 1.5rem;">💸 Send Money</h2>
+        <main style="max-width: 500px; margin: 2rem auto;">
+            <div class="card">
+                <div class="text-center" style="margin-bottom: 2rem;">
+                    <div style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; background: #e0e7ff; color: var(--primary); border-radius: 50%; margin-bottom: 1rem;">
+                        <i data-lucide="send" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <h2>Transfer Funds</h2>
+                    <p class="text-muted">Instant transfer via NEFT / UPI</p>
+                </div>
                 
                 <form id="transferForm">
                     <div class="form-group">
-                        <label for="payee">Payee UPI ID / Account</label>
-                        <input type="text" id="payee" placeholder="merchant@upi" required>
+                        <label for="payee">Payee Account / UPI ID</label>
+                        <input type="text" id="payee" placeholder="merchant@upi" required autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <label for="amount">Amount (₹)</label>
-                        <input type="number" id="amount" placeholder="5000" required>
+                        <label for="amount">Transfer Amount (₹)</label>
+                        <input type="number" id="amount" placeholder="5000" required autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label for="remarks">Remarks (Optional)</label>
-                        <input type="text" id="remarks" placeholder="Dinner split">
+                        <input type="text" id="remarks" placeholder="Dinner split" autocomplete="off">
                     </div>
+                    
+                    <div style="margin: 2rem 0; border-top: 1px dashed var(--border-color);"></div>
+
                     <div class="form-group">
-                        <label for="mpin">MPIN</label>
+                        <label for="mpin">Secure MPIN</label>
                         <input
                             type="password"
                             id="mpin"
                             maxlength="6"
-                            placeholder="Enter 6-digit MPIN"
-                            required>
+                            placeholder="••••••"
+                            required autocomplete="off">
                     </div>
                     
-                    <div id="kavachRiskBanner" class="hidden" style="margin-top:1rem; padding:1rem; border-radius:8px;"></div>
-                    <button type="submit" id="submitBtn" class="btn" style="margin-top: 1rem;">Secure Transfer</button>
-                    <p id="errorMsg" class="error hidden" style="margin-top: 1rem;"></p>
+                    <div id="kavachRiskBanner" class="hidden" style="margin-top:1.5rem; padding:1.25rem; border-radius:8px;"></div>
+                    
+                    <button type="submit" id="submitBtn" class="btn btn-primary" style="margin-top: 1.5rem;">
+                        <i data-lucide="shield-check" class="icon"></i> Secure Transfer
+                    </button>
+                    <p id="errorMsg" class="error-msg hidden" style="margin-top: 1.5rem;"></p>
                 </form>
             </div>
         </main>
@@ -50,6 +66,8 @@
     <script src="js/utils.js"></script>
     <script src="js/kavach-sdk.js"></script>
     <script>
+        lucide.createIcons();
+
         document.addEventListener('DOMContentLoaded', () => {
             const user = utils.getUser();
             if(!user) {
@@ -68,14 +86,14 @@
                 }
 
                 const btn = document.getElementById('submitBtn');
-                const originalText = btn.textContent;
-                btn.textContent = "Verifying Transaction...";
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<i data-lucide="loader-2" class="icon" style="animation: spin 1s linear infinite;"></i> Verifying...`;
+                lucide.createIcons();
                 btn.disabled = true;
 
                 const amount = parseFloat(document.getElementById('amount').value);
                 const payee = document.getElementById('payee').value;
 
-                // Grab behavior just for this form session
                 const behavioralPayload = window.Kavach.getPayload(amount);
 
                 try {
@@ -101,30 +119,33 @@
                     if (!response.ok) {
                         utils.showError('errorMsg', data.detail || "Transaction failed.");
                     } else if (data.access_granted) {
-                        banner.style.background = 'rgba(34,197,94,0.15)';
-                        banner.style.border = '1px solid #22c55e';
-                        banner.innerHTML = `<strong style="color:#22c55e">KAVACH APPROVED</strong><br>
-                            Risk Score: ${data.risk_score} | Transfer of Rs.${amount} to ${payee} completed.`;
+                        banner.style.background = '#d1fae5';
+                        banner.style.border = '1px solid #10b981';
+                        banner.innerHTML = `<div style="display:flex; gap:0.75rem;"><i data-lucide="check-circle-2" style="color:#059669;"></i><div><strong style="color:#065f46">Transaction Successful</strong><br><span style="color:#065f46; font-size:0.9rem;">Transfer of ₹${amount} completed securely. Risk: ${data.risk_score}</span></div></div>`;
                         banner.classList.remove('hidden');
-                        setTimeout(() => window.location.href = 'dashboard.html', 3000);
+                        lucide.createIcons();
+                        setTimeout(() => window.location.href = 'dashboard.html', 2000);
                     } else {
-                        // Handled based on Action
-                        banner.style.background = 'rgba(239,68,68,0.15)';
+                        banner.style.background = '#fee2e2';
                         banner.style.border = '1px solid #ef4444';
-                        banner.innerHTML = `<strong style="color:#ef4444">KAVACH BLOCKED</strong><br>
-                            Risk Score: ${data.risk_score}<br>
-                            ${data.reasons.map(r => `• ${r}`).join('<br>')}`;
+                        banner.innerHTML = `<div style="display:flex; gap:0.75rem;"><i data-lucide="alert-triangle" style="color:#dc2626;"></i><div><strong style="color:#991b1b">KAVACH INTERVENTION</strong><br><span style="color:#991b1b; font-size:0.9rem;">Transaction Blocked. Risk Score: ${data.risk_score}<br>${data.reasons.map(r => `• ${r}`).join('<br>')}</span></div></div>`;
                         banner.classList.remove('hidden');
+                        lucide.createIcons();
                     }
                 } catch (error) {
                     console.error("Tx Error:", error);
                     utils.showError('errorMsg', "Server error. Is the backend running?");
                 } finally {
-                    btn.textContent = originalText;
-                    btn.disabled = false;
+                    if (document.getElementById('kavachRiskBanner').classList.contains('hidden') || !document.querySelector('#kavachRiskBanner').innerText.includes('Successful')) {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }
                 }
             });
         });
     </script>
+    <style>
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
 </body>
 </html>

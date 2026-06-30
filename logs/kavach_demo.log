@@ -999,3 +999,32 @@
 2026-06-30 10:10:47,985 - [INFO] - [36m[INFO][0m   -> Reason: Device matches NO known historical devices
 2026-06-30 10:10:47,985 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Low-Value UPI Transaction (₹1500.0). Behavioral ML bypassed for <0.01s latency.
 2026-06-30 10:10:48,029 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (742.13ms)
+2026-06-30 10:14:54,755 - [INFO] - [36m[INFO][0m Login attempt for: deepak@upi
+2026-06-30 10:14:54,755 - [INFO] - [36m[INFO][0m Customer Name: Deepak
+2026-06-30 10:14:54,755 - [INFO] - [36m[INFO][0m UPI ID: deepak@upi
+2026-06-30 10:14:54,755 - [INFO] - [36m[INFO][0m Device Hash: kavach_1f995b0b06
+2026-06-30 10:14:55,363 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-30 10:14:55,363 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 10:14:55,363 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 10:14:55,363 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 10:14:55,363 - [INFO] - [36m[INFO][0m User: deepak@upi
+2026-06-30 10:14:55,363 - [INFO] - [36m[INFO][0m Hold Mean: 206.0 ms
+2026-06-30 10:14:55,363 - [INFO] - [36m[INFO][0m Hold Std: 44.0 ms
+2026-06-30 10:14:55,363 - [INFO] - [36m[INFO][0m IKI Mean: 0.0 ms
+2026-06-30 10:14:55,363 - [INFO] - [36m[INFO][0m IKI Std: 0.0 ms
+2026-06-30 10:14:55,363 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 10:14:55,363 - [INFO] - [36m[INFO][0m Hesitation: 1012.0 ms
+2026-06-30 10:14:55,370 - [INFO] - [36m[INFO][0m Mouse Entropy: 26.09
+2026-06-30 10:14:55,370 - [INFO] - [36m[INFO][0m Gyro Angle: 0.0
+2026-06-30 10:14:55,370 - [INFO] - [36m[INFO][0m Transaction Amount: 1500.0
+2026-06-30 10:14:55,370 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 10:14:55,373 - [INFO] - [36m[INFO][0m Risk Score: [32m0.0[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 10:14:55,375 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Low-Value UPI Transaction (₹1500.0). Behavioral ML bypassed for <0.01s latency.
+2026-06-30 10:14:55,411 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (661.44ms)
+2026-06-30 10:19:28,812 - [INFO] - [36m[INFO][0m Transaction attempt by: deepak@upi for amount: 35.0
+2026-06-30 10:19:28,888 - [INFO] - [36m[INFO][0m Tx Risk Score: [32m0.0[0m | Action: [32mALLOW[0m
+2026-06-30 10:19:28,888 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/transaction - [32m200[0m (92.22ms)
+2026-06-30 10:19:49,151 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/user/dna - [32m200[0m (20.80ms)
+2026-06-30 10:19:49,176 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/user/logs - [32m200[0m (16.64ms)
+2026-06-30 10:21:21,525 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/user/dna - [32m200[0m (9.78ms)
+2026-06-30 10:21:21,552 - [INFO] - [36m[INFO][0m [UI ACTION] [36mGET[0m /api/v1/user/logs - [32m200[0m (12.00ms)

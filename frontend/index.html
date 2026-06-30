@@ -4,44 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KAVACH | Next-Gen Behavioral Auth</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <div class="container">
         <!-- Main Auth Card -->
-        <div class="auth-container glass-panel text-center">
-            <a href="index.html" class="logo">🛡️ KAVACH <span>Banking</span></a>
-            <h2>Welcome to the Future of Security</h2>
+        <div class="auth-container card text-center">
+            <a href="index.html" class="logo">
+                <i data-lucide="shield-check" class="icon-lg"></i>
+                KAVACH <span>Banking</span>
+            </a>
+            <h2>Future-Proof Security</h2>
             <p style="color: var(--text-muted); margin-bottom: 2rem;">
-                Experience AI-driven behavioral authentication that protects you silently in the background.
+                Experience AI-driven behavioral authentication that protects your transactions silently in the background.
             </p>
 
-            <a href="login.html" class="btn btn-primary" style="margin-bottom: 1rem;">Access Account (Demo)</a>
-            <a href="register.html" class="btn btn-secondary">Enroll New User</a>
+            <a href="login.html" class="btn btn-primary" style="margin-bottom: 1rem;">
+                <i data-lucide="log-in" class="icon"></i> Secure Login
+            </a>
+            <a href="register.html" class="btn btn-secondary">
+                <i data-lucide="user-plus" class="icon"></i> Enroll New Account
+            </a>
         </div>
 
-        <!-- Hackathon Info Card -->
-        <div class="hackathon-info glass-panel" style="margin-top: 3rem;">
-            <h2>Project: KAVACH</h2>
-            <p><strong>Motive:</strong> To eradicate digital banking fraud (like the "Jamtara" screen-sharing & phishing scams) in India using Privacy-Preserving Behavioral AI. KAVACH validates <em>who</em> is typing, not just <em>what</em> they type, rendering stolen OTPs and passwords useless to attackers.</p>
+        <!-- Compliance / Info Footer -->
+        <div class="compliance-footer">
+            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                <i data-lucide="info" style="color: var(--primary);"></i>
+                <h2 style="margin: 0; font-size: 1.25rem;">Project Overview: KAVACH</h2>
+            </div>
+            
+            <p><strong>Objective:</strong> To eradicate digital banking fraud (Account Takeover, Remote Desktop hijacking) using Privacy-Preserving Behavioral AI. KAVACH continuously validates the behavioral identity of the user, rendering stolen OTPs and credentials useless.</p>
 
-            <h3>Development Team</h3>
-            <ul>
-                <li><strong>Deepak Kumar Ravi</strong></li>
-                <li><strong>Gaurav Raj</strong></li>
-                <li><strong>Umesh Gupta</strong></li>
-            </ul>
+            <div class="grid" style="margin-top: 2rem;">
+                <div>
+                    <h3>Development Team</h3>
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li>• Deepak Kumar Ravi</li>
+                        <li>• Gaurav Raj</li>
+                        <li>• Umesh Gupta</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Organization</h3>
+                    <p>Developed for the <strong>PSB Hackathon</strong> hosted by MNNIT Allahabad.</p>
+                </div>
+            </div>
 
-            <h3>Organization</h3>
-            <p>Developed for the <strong>PSB Hackathon</strong> hosted by <strong>MNNIT Allahabad</strong>.</p>
-
-            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(0,0,0,0.1);">
-                <p style="font-size: 0.9rem; color: var(--text-muted);">
-                    <strong>Features Demonstrated:</strong> Keystroke Dynamics (Hold Times, Inter-Key Intervals), Mouse Entropy, Device Fingerprinting, Phase-Gated ML Enrollment, Composite Risk Scoring, Cross-Platform Responsive UI.
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                <p style="font-size: 0.85rem; color: var(--text-muted);">
+                    <strong>Core Technologies:</strong> Keystroke Dynamics, Mouse Entropy, Device Fingerprinting, Phase-Gated ML Enrollment, Kavach Ledger Intelligence (KLI).
                 </p>
             </div>
         </div>
     </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>
