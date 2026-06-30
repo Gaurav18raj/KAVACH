@@ -1,4 +1,7 @@
 import math
+import os
+import joblib
+import numpy as np
 
 # ==========================================
 # KAVACH BACKEND: Behavioral Scorer
@@ -63,8 +66,34 @@ def score_behavior(current_features, baseline_dna):
         z_scores.append(2.5)
         reasons.append("WARNING: Device is perfectly flat during typing. Possible automated bot or remote access.")
 
-    # 5. Aggregate
-    avg_z = sum(z_scores) / len(z_scores) if z_scores else 0
+    # 5. --- TRUE ML UPGRADE: Isolation Forest Inference ---
+    # Check if a trained Isolation Forest model exists for this user
+    model_path = f"models/user_{baseline_dna.user_id}_iforest.pkl"
+    ml_score = None
+    if os.path.exists(model_path):
+        try:
+            model = joblib.load(model_path)
+            current_vector = np.array([[current_features.hold_mean, current_features.iki_mean]])
+            # decision_function returns > 0 for inliers, < 0 for outliers
+            # Lower score = more anomalous. Let's invert it for our 0-1 risk scale.
+            anomaly_score = model.decision_function(current_vector)[0]
+            if anomaly_score < 0:
+                reasons.append(f"ML ISOLATION FOREST: Anomaly Detected (Score: {anomaly_score:.2f})")
+                z_scores.append(3.0) # Treat as high risk
+            else:
+                reasons.append(f"ML ISOLATION FOREST: Behavior matches authentic signature (Score: {anomaly_score:.2f})")
+                z_scores.append(0.0) # Treat as completely safe
+            ml_score = True
+        except Exception as e:
+            print(f"Failed to load/run Isolation Forest: {e}")
+
+    # 6. Aggregate
+    if ml_score:
+        # If ML model ran successfully, we rely heavily on its decision for the behavioral part.
+        avg_z = sum(z_scores) / len(z_scores)
+    else:
+        avg_z = sum(z_scores) / len(z_scores) if z_scores else 0
+        
     final_score = sigmoid_normalization(avg_z)
     
     # Cap very low scores to 0 to prevent noise

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAVACH | Judge Analytics Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .chart-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            position: relative;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="dashboard.html" class="logo" style="font-size: 1.1rem; gap: 0.25rem;">
+                <i data-lucide="arrow-left" class="icon"></i> Back to App
+            </a>
+            <div style="background: #fee2e2; color: #991b1b; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i data-lucide="shield-alert" style="width: 16px; height: 16px;"></i> Hackathon Judge Panel
+            </div>
+        </header>
+
+        <main style="max-width: 1000px; margin: 0 auto; padding-top: 2rem;">
+            <div style="text-bottom: 2rem; margin-bottom: 2rem;">
+                <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-color);">Behavioral DNA Signatures</h1>
+                <p class="text-muted" style="font-size: 1.1rem;">Visual proof that Keystroke Rhythm acts as a unique biometric fingerprint.</p>
+            </div>
+
+            <div class="dashboard-grid" id="chartGrid">
+                <!-- Charts will be injected here -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        async function fetchAnalytics() {
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/admin/analytics');
+                const data = await response.json();
+                
+                const grid = document.getElementById('chartGrid');
+                if (data.length === 0) {
+                    grid.innerHTML = '<p class="text-muted" style="grid-column: span 2; text-align: center;">No active users with trained baselines yet. Run the reset script or complete 5 logins!</p>';
+                    return;
+                }
+
+                data.forEach((user, index) => {
+                    const container = document.createElement('div');
+                    container.className = 'chart-container';
+                    
+                    const title = document.createElement('h3');
+                    title.style.marginBottom = '1rem';
+                    title.style.textAlign = 'center';
+                    title.innerText = `User: ${user.username}`;
+                    container.appendChild(title);
+
+                    const canvas = document.createElement('canvas');
+                    container.appendChild(canvas);
+                    grid.appendChild(container);
+
+                    // Colors
+                    const colors = [
+                        { bg: 'rgba(59, 130, 246, 0.2)', border: 'rgb(59, 130, 246)' },
+                        { bg: 'rgba(16, 185, 129, 0.2)', border: 'rgb(16, 185, 129)' },
+                        { bg: 'rgba(245, 158, 11, 0.2)', border: 'rgb(245, 158, 11)' }
+                    ];
+                    const color = colors[index % colors.length];
+
+                    new Chart(canvas, {
+                        type: 'radar',
+                        data: {
+                            labels: ['Hold Mean (ms)', 'IKI Mean (ms)', 'Hold Variance', 'IKI Variance'],
+                            datasets: [{
+                                label: `Behavioral Vector`,
+                                data: [
+                                    user.hold_mean, 
+                                    user.iki_mean, 
+                                    user.hold_std, 
+                                    user.iki_std
+                                ],
+                                fill: true,
+                                backgroundColor: color.bg,
+                                borderColor: color.border,
+                                pointBackgroundColor: color.border,
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: color.border
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                r: {
+                                    angleLines: { color: 'rgba(0,0,0,0.1)' },
+                                    grid: { color: 'rgba(0,0,0,0.1)' },
+                                    pointLabels: { font: { size: 12, family: 'Inter' } },
+                                    ticks: { display: false }
+                                }
+                            },
+                            plugins: {
+                                legend: { display: false }
+                            }
+                        }
+                    });
+                });
+            } catch (err) {
+                console.error("Failed to load analytics", err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchAnalytics);
+    </script>
+</body>
+</html>

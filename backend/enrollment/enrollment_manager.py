@@ -3,6 +3,10 @@ from ..models import User, BehavioralBaseline
 from ..config import ENROLLMENT_SESSIONS
 import json
 import statistics
+import os
+import numpy as np
+from sklearn.ensemble import IsolationForest
+import joblib
 
 # ==========================================
 # KAVACH BACKEND: Enrollment Manager
@@ -77,4 +81,19 @@ def process_enrollment_event(db: Session, user: User, behavioral_data):
         if baseline.iki_std < 5.0:
             baseline.iki_std = 5.0
 
+        # --- TRUE ML UPGRADE: Train Isolation Forest ---
+        # We train an Isolation Forest on the behavioral vectors (hold, IKI)
+        try:
+            X_train = np.array(list(zip(hold_samples, iki_samples)))
+            # We assume enrollment samples are normal (contamination='auto' or small)
+            model = IsolationForest(n_estimators=100, contamination=0.1, random_state=42)
+            model.fit(X_train)
+            
+            os.makedirs("models", exist_ok=True)
+            model_path = f"models/user_{user.id}_iforest.pkl"
+            joblib.dump(model, model_path)
+            print(f"[ML PIPELINE] Trained and saved IsolationForest for User {user.id}")
+        except Exception as e:
+            print(f"[ML PIPELINE ERROR] Failed to train IsolationForest: {e}")
+            
     db.commit()
