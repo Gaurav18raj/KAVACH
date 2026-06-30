@@ -4,9 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KAVACH | Secure Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: stretch;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px) {
+            .split-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        .telemetry-panel {
+            background: #0B3D2E; /* Institutional Primary */
+            color: #F4F1EA;
+            border-radius: 12px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        .stream-log {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            width: 100%;
+            height: 100px;
+            overflow-y: hidden;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column-reverse;
+            color: #10b981;
+        }
+        .stream-row {
+            margin-bottom: 0.25rem;
+            animation: slideIn 0.2s ease-out forwards;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -17,8 +67,9 @@
             </a>
         </header>
 
-        <main>
-            <div class="card auth-container">
+        <main class="split-layout">
+            <!-- Left Side: Standard Bank Login -->
+            <div class="card auth-container" style="margin: 0;">
                 <div class="text-center" style="margin-bottom: 2rem;">
                     <div style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; background: #e0e7ff; color: var(--primary); border-radius: 50%; margin-bottom: 1rem;">
                         <i data-lucide="lock" style="width: 32px; height: 32px;"></i>
@@ -66,6 +117,30 @@
                     New to KAVACH? <a href="register.html" class="link">Enroll your behavioral profile</a>
                 </p>
             </div>
+
+            <!-- Right Side: Live Trust Meter (Hackathon Signature Element) -->
+            <div class="telemetry-panel">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: #F4F1EA; font-weight: 600;">
+                    <i data-lucide="activity" style="color: #10b981;"></i> LIVE BEHAVIORAL TELEMETRY
+                </div>
+                <p style="text-align: center; font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 2rem;">
+                    KAVACH is silently analyzing your keystroke rhythm and haptics before you submit.
+                </p>
+
+                <!-- Chart.js Trust Meter Gauge -->
+                <div style="position: relative; width: 250px; height: 250px;">
+                    <canvas id="trustMeter"></canvas>
+                    <div style="position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                        <div id="meterStatus" style="font-size: 1.25rem; font-weight: 700; color: #10b981;">ANALYZING</div>
+                        <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: rgba(255,255,255,0.7);">RHYTHM</div>
+                    </div>
+                </div>
+
+                <!-- Raw Data Stream -->
+                <div class="stream-log" id="streamLog">
+                    <div class="stream-row">Waiting for keystrokes...</div>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -73,6 +148,79 @@
     <script src="js/kavach-sdk.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/login.js"></script>
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+        
+        // --- LIVE TRUST METER (Chart.js Gauge) ---
+        const ctx = document.getElementById('trustMeter').getContext('2d');
+        const trustMeter = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Risk', 'Safe'],
+                datasets: [{
+                    data: [10, 90], // Start Safe
+                    backgroundColor: ['#A8322D', '#1E8E5A'], // Brick Red, Confident Green
+                    borderWidth: 0,
+                    circumference: 180,
+                    rotation: 270,
+                    cutout: '80%'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: { duration: 200 },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false }
+                }
+            }
+        });
+
+        // Listen for the silent Kavach SDK keystroke event
+        window.addEventListener('kavach_keystroke', (e) => {
+            const data = e.detail;
+            
+            // 1. Update Stream Log
+            const stream = document.getElementById('streamLog');
+            const row = document.createElement('div');
+            row.className = 'stream-row';
+            
+            const isJamtara = document.getElementById('simulateJamtara').checked;
+            
+            if (isJamtara) {
+                // If Jamtara mode is checked, flash red anomalous data
+                row.innerHTML = `<span style="color:#A8322D">ANOMALY [${data.key}] -> Hold: ${(data.hold + 200)}ms | IKI: ${(data.iki + 500)}ms</span>`;
+                document.getElementById('meterStatus').innerText = 'HIGH RISK';
+                document.getElementById('meterStatus').style.color = '#A8322D';
+                trustMeter.data.datasets[0].data = [80, 20]; // Shift gauge to red
+                trustMeter.update();
+            } else {
+                // Normal typing
+                row.innerText = `[${data.key}] -> Hold: ${data.hold}ms | IKI: ${data.iki}ms`;
+                document.getElementById('meterStatus').innerText = 'ANALYZING';
+                document.getElementById('meterStatus').style.color = '#10b981';
+                // Fluctuate gauge slightly to show live analysis
+                const variance = Math.random() * 10;
+                trustMeter.data.datasets[0].data = [10 + variance, 90 - variance];
+                trustMeter.update();
+            }
+
+            stream.prepend(row);
+            if (stream.children.length > 5) {
+                stream.removeChild(stream.lastChild);
+            }
+        });
+
+        // Instant reset when checkbox is toggled
+        document.getElementById('simulateJamtara').addEventListener('change', (e) => {
+            if(!e.target.checked) {
+                trustMeter.data.datasets[0].data = [10, 90];
+                trustMeter.update();
+                document.getElementById('meterStatus').innerText = 'ANALYZING';
+                document.getElementById('meterStatus').style.color = '#10b981';
+            }
+        });
+    </script>
 </body>
 </html>

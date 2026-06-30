@@ -302,7 +302,16 @@ def process_transaction(tx_data: TransactionRequest, db: Session = Depends(get_d
         
         # Update Profile
         if not user_profile:
-            user_profile = UserSpendingProfile(user_id=user.id)
+            user_profile = UserSpendingProfile(
+                user_id=user.id,
+                avg_txn_amount=0.0,
+                max_single_txn=0.0,
+                daily_total_cap=0.0,
+                monthly_total_cap=0.0,
+                velocity_norm=0.0,
+                active_hours_start=8,
+                active_hours_end=22
+            )
             db.add(user_profile)
         
         # Simple rolling average

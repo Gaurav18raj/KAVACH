@@ -89,13 +89,32 @@ class KavachSDK {
 
         document.addEventListener('keyup', (e) => {
             const upTime = Date.now();
+            let currentHold = 0;
+            let currentIki = 0;
+
             if (this.lastKeyDownTime) {
-                const hold = upTime - this.lastKeyDownTime;
-                if (hold > 0 && hold < 1000) { // filter outliers
-                    this.sessionData.keystrokes.holdDurations.push(hold);
+                currentHold = upTime - this.lastKeyDownTime;
+                if (currentHold > 0 && currentHold < 1000) { // filter outliers
+                    this.sessionData.keystrokes.holdDurations.push(currentHold);
                 }
             }
+
+            if (this.lastKeyUpTime && this.lastKeyDownTime) {
+                currentIki = this.lastKeyDownTime - this.lastKeyUpTime;
+            }
+
             this.lastKeyUpTime = upTime;
+
+            // Dispatch Live Telemetry Event for UI Visualization
+            const event = new CustomEvent('kavach_keystroke', {
+                detail: {
+                    key: e.key,
+                    hold: currentHold,
+                    iki: currentIki > 0 && currentIki < 2000 ? currentIki : 0,
+                    mouseEntropy: this.sessionData.haptics.mouseEntropy
+                }
+            });
+            window.dispatchEvent(event);
         });
 
         // Track hesitation on form submit

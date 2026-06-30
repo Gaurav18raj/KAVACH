@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KAVACH | Security Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        .progress-bar {
+        .progress-segments {
+            display: flex;
+            gap: 4px;
             width: 100%;
-            background-color: #e2e8f0;
-            border-radius: 999px;
-            height: 8px;
-            overflow: hidden;
             margin-top: 0.5rem;
         }
-        .progress-fill {
-            height: 100%;
+        .progress-segment {
+            flex: 1;
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 999px;
+            transition: background-color 0.5s ease;
+        }
+        .progress-segment.active {
             background-color: var(--primary);
-            transition: width 0.5s ease;
         }
     </style>
 </head>
@@ -36,7 +40,7 @@
                 <i data-lucide="shield-check" class="icon-lg"></i> Security & Behavioral DNA
             </h2>
             
-            <div class="card" style="margin-bottom: 2rem; border-left: 4px solid var(--accent);">
+            <div class="card" style="margin-bottom: 2rem; border-left: 4px solid var(--primary);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                     <div>
                         <h3 style="margin-bottom: 0.25rem;">Behavioral Learning Phase</h3>
@@ -54,27 +58,19 @@
                         <span>Training Progress</span>
                         <span id="enrollmentText">0 / 5 Logins</span>
                     </div>
-                    <div class="progress-bar">
-                        <div id="enrollmentFill" class="progress-fill" style="width: 0%;"></div>
+                    <div class="progress-segments" id="enrollmentSegments">
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
+                        <div class="progress-segment"></div>
                     </div>
                     <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Behavioral ML interventions are muted until a reliable baseline is established.</p>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-                    <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
-                        <i data-lucide="keyboard" style="color: var(--primary); margin-bottom: 0.5rem;"></i>
-                        <small style="color: var(--text-muted); display: block; font-weight: 600;">Avg Hold Time</small>
-                        <strong id="holdMean" style="font-size: 1.25rem;">-- ms</strong>
-                    </div>
-                    <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
-                        <i data-lucide="timer" style="color: var(--primary); margin-bottom: 0.5rem;"></i>
-                        <small style="color: var(--text-muted); display: block; font-weight: 600;">Avg Key Interval</small>
-                        <strong id="ikiMean" style="font-size: 1.25rem;">-- ms</strong>
-                    </div>
-                    <div style="background: var(--bg-primary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
-                        <i data-lucide="smartphone" style="color: var(--primary); margin-bottom: 0.5rem;"></i>
-                        <small style="color: var(--text-muted); display: block; font-weight: 600;">Trusted Devices</small>
-                        <strong id="devices" style="font-size: 1.25rem;">--</strong>
+                <div style="margin-top: 2rem;">
+                    <div style="position: relative; height: 350px; width: 100%;">
+                        <canvas id="dnaRadarChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -120,7 +116,10 @@
                             const current = parseInt(match[1]);
                             const total = parseInt(match[2]);
                             document.getElementById('enrollmentText').textContent = `${current} / ${total} Logins`;
-                            document.getElementById('enrollmentFill').style.width = `${(current / total) * 100}%`;
+                            const segments = document.querySelectorAll('#enrollmentSegments .progress-segment');
+                            segments.forEach((seg, idx) => {
+                                if (idx < current) seg.classList.add('active');
+                            });
                         }
                     } else {
                         badge.className = "status-badge status-low";
@@ -128,9 +127,43 @@
                     }
                     lucide.createIcons();
 
-                    document.getElementById('holdMean').textContent = `${Math.round(dnaData.hold_mean)} ms`;
-                    document.getElementById('ikiMean').textContent = `${Math.round(dnaData.iki_mean)} ms`;
-                    document.getElementById('devices').textContent = dnaData.trusted_devices_count;
+                    // Render Radar Chart
+                    const ctx = document.getElementById('dnaRadarChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: ['Hold Mean (ms)', 'IKI Mean (ms)', 'Trusted Devices', 'Consistency'],
+                            datasets: [{
+                                label: 'Behavioral Vector',
+                                data: [
+                                    dnaData.hold_mean,
+                                    dnaData.iki_mean,
+                                    dnaData.trusted_devices_count * 50, // Scale for visibility
+                                    85 // Mock consistency score
+                                ],
+                                backgroundColor: 'rgba(11, 61, 46, 0.2)', // --primary with opacity
+                                borderColor: '#0B3D2E',
+                                pointBackgroundColor: '#0B3D2E',
+                                pointBorderColor: '#fff',
+                                pointHoverBackgroundColor: '#fff',
+                                pointHoverBorderColor: '#0B3D2E',
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                r: {
+                                    angleLines: { color: 'rgba(0,0,0,0.1)' },
+                                    grid: { color: 'rgba(0,0,0,0.1)' },
+                                    pointLabels: { font: { size: 12, family: 'Inter' } },
+                                    ticks: { display: false }
+                                }
+                            },
+                            plugins: { legend: { display: false } }
+                        }
+                    });
                 }
             } catch (err) {
                 console.error("Error fetching DNA", err);
@@ -171,12 +204,25 @@
                         let reasonHtml = '';
                         if (log.reasons && log.reasons !== '[]') {
                             try {
-                                // Sometimes it's a string representation of a list, sometimes JSON
+                                // Sometimes it's a string representation of a list: "['Reason 1', 'Reason 2']"
                                 let reasonsArr = log.reasons;
                                 if (typeof reasonsArr === 'string') {
-                                    reasonsArr = reasonsArr.replace(/'/g, '"');
-                                    reasonsArr = JSON.parse(reasonsArr);
+                                    // Remove the outer brackets
+                                    let innerString = reasonsArr.replace(/^\[|\]$/g, '');
+                                    // Match strings enclosed in single or double quotes
+                                    const regex = /['"](.*?)['"]/g;
+                                    let matches = [];
+                                    let match;
+                                    while ((match = regex.exec(innerString)) !== null) {
+                                        matches.push(match[1]);
+                                    }
+                                    if (matches.length > 0) {
+                                        reasonsArr = matches;
+                                    } else {
+                                        reasonsArr = [reasonsArr]; // Fallback
+                                    }
                                 }
+                                
                                 if (Array.isArray(reasonsArr)) {
                                     reasonHtml = `<ul style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted); padding-left: 1.2rem;">
                                         ${reasonsArr.map(r => `<li style="margin-bottom: 0.25rem;">${r}</li>`).join('')}
@@ -191,14 +237,14 @@
 
                         li.innerHTML = `
                             <div style="flex: 1; padding-right: 1rem;">
-                                <strong style="display: block; color: var(--primary);">${date}</strong>
+                                <strong class="metric-value" style="display: block; color: var(--primary);">${date}</strong>
                                 ${reasonHtml}
                             </div>
                             <div style="text-align: right; min-width: 100px;">
                                 <span style="display: inline-flex; align-items: center; gap: 0.25rem; color: ${color}; font-weight: 700; font-size: 0.9rem;">
                                     <i data-lucide="${icon}" style="width: 14px; height: 14px;"></i> ${log.action}
                                 </span>
-                                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Risk Score: ${log.score.toFixed(2)}</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Risk Score: <span class="metric-value">${log.score.toFixed(2)}</span></div>
                             </div>
                         `;
                         list.appendChild(li);

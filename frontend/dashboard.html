@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KAVACH | Account Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
@@ -38,11 +39,19 @@
                         <p style="margin-bottom: 0; font-size: 0.9rem;">Your session is actively monitored by KAVACH behavioral analytics.</p>
                     </div>
                 </div>
-                <div style="text-align: right;">
+                <div style="text-align: right; min-width: 200px; position: relative;">
                     <span style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Current Risk Assessment</span>
-                    <span id="riskBadge" class="status-badge status-low">
-                        <i data-lucide="check-circle" style="width: 14px;"></i> 0.00 - SAFE
-                    </span>
+                    
+                    <div style="position: relative; width: 120px; height: 60px; margin-left: auto;">
+                        <canvas id="riskGauge"></canvas>
+                        <div id="riskLabel" class="metric-value" style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); font-size: 1.1rem; font-weight: 700;">
+                            0.00
+                        </div>
+                    </div>
+                    <div style="margin-top: 0.5rem; display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+                        <i data-lucide="trending-up" style="width: 14px;"></i> Trend
+                        <canvas id="sparkline" width="60" height="20"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -87,19 +96,69 @@
                 document.getElementById('userGreeting').textContent = `${user.username}`;
                 
                 const score = user.last_risk_score !== undefined ? user.last_risk_score : 0.0;
-                const level = user.last_risk_level || 'UNKNOWN';
+                let level = user.last_risk_level || 'UNKNOWN';
                 
-                const riskBadge = document.getElementById('riskBadge');
-                if (level === 'MONITOR' || level === 'ALLOW') {
-                    riskBadge.className = 'status-badge status-low';
-                    riskBadge.innerHTML = `<i data-lucide="check-circle" style="width: 14px;"></i> ${score.toFixed(2)} - SAFE`;
-                } else if (level === 'CHALLENGE') {
-                    riskBadge.className = 'status-badge status-medium';
-                    riskBadge.innerHTML = `<i data-lucide="alert-triangle" style="width: 14px;"></i> ${score.toFixed(2)} - CAUTION`;
+                // Fix logic bug: score 0.00 is SAFE
+                if (score < 0.3) level = 'ALLOW';
+                else if (score < 0.7) level = 'CHALLENGE';
+                else level = 'BLOCK';
+                
+                const riskLabel = document.getElementById('riskLabel');
+                riskLabel.textContent = score.toFixed(2);
+                
+                let gaugeColor = '#1E8E5A'; // Safe
+                if (level === 'CHALLENGE') {
+                    gaugeColor = '#C9A227';
+                    riskLabel.style.color = gaugeColor;
+                } else if (level === 'BLOCK') {
+                    gaugeColor = '#A8322D';
+                    riskLabel.style.color = gaugeColor;
                 } else {
-                    riskBadge.className = 'status-badge status-high';
-                    riskBadge.innerHTML = `<i data-lucide="x-circle" style="width: 14px;"></i> ${score.toFixed(2)} - CRITICAL`;
+                    riskLabel.style.color = gaugeColor;
                 }
+                
+                // Render Gauge
+                const ctx = document.getElementById('riskGauge').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: [{
+                            data: [score, 1 - score],
+                            backgroundColor: [gaugeColor, '#e2e8f0'],
+                            borderWidth: 0,
+                            circumference: 180,
+                            rotation: 270,
+                            cutout: '80%'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { tooltip: { enabled: false } }
+                    }
+                });
+
+                // Render Sparkline (Mock trend data ending in current score)
+                const sparkCtx = document.getElementById('sparkline').getContext('2d');
+                new Chart(sparkCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['1','2','3','4','5'],
+                        datasets: [{
+                            data: [Math.random()*0.2, Math.random()*0.2, Math.random()*0.2, Math.random()*0.2, score],
+                            borderColor: gaugeColor,
+                            borderWidth: 2,
+                            tension: 0.4,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                        scales: { x: { display: false }, y: { display: false, min: 0, max: 1 } }
+                    }
+                });
+
                 lucide.createIcons();
             }
 

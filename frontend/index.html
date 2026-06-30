@@ -4,62 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KAVACH | Next-Gen Behavioral Auth</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .hero-section {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .hero-section p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .action-buttons .btn {
+            width: auto;
+            padding: 1rem 2rem;
+        }
+        
+        details.about-project {
+            margin-top: 5rem;
+            background: #ffffff;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            cursor: pointer;
+        }
+        details.about-project summary {
+            font-weight: 600;
+            color: var(--text-muted);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            outline: none;
+        }
+        details.about-project summary::-webkit-details-marker {
+            display: none;
+        }
+        .about-content {
+            padding-top: 2rem;
+            cursor: default;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <!-- Main Auth Card -->
-        <div class="auth-container card text-center">
-            <a href="index.html" class="logo">
-                <i data-lucide="shield-check" class="icon-lg"></i>
-                KAVACH <span>Banking</span>
-            </a>
-            <h2>Future-Proof Security</h2>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;">
+        <!-- Customer-Facing Hero Section -->
+        <div class="hero-section">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; color: var(--primary);">
+                <i data-lucide="shield-check" style="width: 48px; height: 48px;"></i>
+                <span style="font-size: 2rem; font-weight: 800; font-family: var(--font-display); letter-spacing: -0.05em;">KAVACH <span style="font-weight: 400; color: var(--text-muted);">Banking</span></span>
+            </div>
+            
+            <h1>Future-Proof Security</h1>
+            <p>
                 Experience AI-driven behavioral authentication that protects your transactions silently in the background.
             </p>
 
-            <a href="login.html" class="btn btn-primary" style="margin-bottom: 1rem;">
-                <i data-lucide="log-in" class="icon"></i> Secure Login
-            </a>
-            <a href="register.html" class="btn btn-secondary">
-                <i data-lucide="user-plus" class="icon"></i> Enroll New Account
-            </a>
-        </div>
-
-        <!-- Compliance / Info Footer -->
-        <div class="compliance-footer">
-            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-                <i data-lucide="info" style="color: var(--primary);"></i>
-                <h2 style="margin: 0; font-size: 1.25rem;">Project Overview: KAVACH</h2>
-            </div>
-            
-            <p><strong>Objective:</strong> To eradicate digital banking fraud (Account Takeover, Remote Desktop hijacking) using Privacy-Preserving Behavioral AI. KAVACH continuously validates the behavioral identity of the user, rendering stolen OTPs and credentials useless.</p>
-
-            <div class="grid" style="margin-top: 2rem;">
-                <div>
-                    <h3>Development Team</h3>
-                    <ul style="list-style-type: none; padding: 0;">
-                        <li>• Deepak Kumar Ravi</li>
-                        <li>• Gaurav Raj</li>
-                        <li>• Umesh Gupta</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3>Organization</h3>
-                    <p>Developed for the <strong>PSB Hackathon</strong> hosted by MNNIT Allahabad.</p>
-                </div>
-            </div>
-
-            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
-                <p style="font-size: 0.85rem; color: var(--text-muted);">
-                    <strong>Core Technologies:</strong> Keystroke Dynamics, Mouse Entropy, Device Fingerprinting, Phase-Gated ML Enrollment, Kavach Ledger Intelligence (KLI).
-                </p>
+            <div class="action-buttons">
+                <a href="login.html" class="btn btn-primary">
+                    <i data-lucide="log-in" class="icon"></i> Secure Login
+                </a>
+                <a href="register.html" class="btn btn-secondary">
+                    <i data-lucide="user-plus" class="icon"></i> Enroll New Account
+                </a>
             </div>
         </div>
+
+        <!-- Hackathon Info (Collapsed for Judges to Explore Later) -->
+        <details class="about-project">
+            <summary><i data-lucide="info" style="width: 18px; height: 18px;"></i> About this Hackathon Project</summary>
+            <div class="about-content">
+                <p style="margin-bottom: 1.5rem;"><strong>Objective:</strong> To eradicate digital banking fraud (Account Takeover, Remote Desktop hijacking) using Privacy-Preserving Behavioral AI. KAVACH continuously validates the behavioral identity of the user, rendering stolen OTPs and credentials useless.</p>
+
+                <div class="grid">
+                    <div>
+                        <h3 style="font-family: var(--font-body); font-size: 1.1rem;">Development Team</h3>
+                        <ul style="list-style-type: none; padding: 0; color: var(--text-muted);">
+                            <li style="margin-bottom: 0.25rem;">• Deepak Kumar Ravi</li>
+                            <li style="margin-bottom: 0.25rem;">• Gaurav Raj</li>
+                            <li>• Umesh Gupta</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="font-family: var(--font-body); font-size: 1.1rem;">Organization</h3>
+                        <p style="color: var(--text-muted);">Developed for the <strong>PSB Hackathon</strong> hosted by MNNIT Allahabad.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">
+                        <strong>Core Technologies:</strong> Keystroke Dynamics, Mouse Entropy, Device Fingerprinting, Phase-Gated ML Enrollment, Kavach Ledger Intelligence (KLI).
+                    </p>
+                </div>
+            </div>
+        </details>
     </div>
 
     <script>
