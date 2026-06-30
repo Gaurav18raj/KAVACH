@@ -65,12 +65,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     // Handled based on Action
                     if (data.action === "OTP_CHALLENGE") {
-                        utils.showError('errorMsg', `[RISK: CHALLENGE] Unusual behavior detected. OTP Challenge required.`);
+                        const otp = prompt(`[KAVACH RISK SCORE: ${data.risk_score}]\nUnrecognized Device Detected.\n\nTo prove you are ${username}, please enter the OTP sent to your phone (Demo OTP: 1234):`);
+                        
+                        if (otp === "1234") {
+                            utils.setToken(data.session_token);
+                            utils.setUser({ 
+                                username: username,
+                                last_risk_score: data.risk_score,
+                                last_risk_level: data.risk_level
+                            });
+                            btn.style.backgroundColor = "var(--accent)";
+                            btn.textContent = `OTP Verified!`;
+                            setTimeout(() => {
+                                window.location.href = "dashboard.html";
+                            }, 1000);
+                        } else {
+                            utils.showError('errorMsg', `[RISK: CHALLENGE] Invalid OTP. Access Denied.`);
+                            btn.textContent = originalText;
+                            btn.disabled = false;
+                        }
                     } else {
                         utils.showError('errorMsg', `[RISK: CRITICAL] Access Blocked. ${data.reasons.join(', ')}`);
+                        btn.textContent = originalText;
+                        btn.disabled = false;
                     }
-                    btn.textContent = originalText;
-                    btn.disabled = false;
                 }
             } catch (error) {
                 console.error("Login Error:", error);

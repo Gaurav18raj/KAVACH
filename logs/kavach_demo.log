@@ -910,3 +910,92 @@
 2026-06-30 01:24:25,105 - [INFO] - [36m[INFO][0m   -> Reason: WARNING: High-Value Transaction (₹99000.0). Enforcing maximum Sensor Fusion rigor.
 2026-06-30 01:24:25,105 - [INFO] - [36m[INFO][0m   -> Reason: ZERO-TRUST OVERRIDE: Critical sensor anomalies bypass standard ML formula.
 2026-06-30 01:24:25,111 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (605.30ms)
+2026-06-30 10:05:31,506 - [INFO] - [36m[INFO][0m Login attempt for: deepak@upi
+2026-06-30 10:05:31,506 - [INFO] - [36m[INFO][0m Customer Name: Deepak
+2026-06-30 10:05:31,506 - [INFO] - [36m[INFO][0m UPI ID: deepak@upi
+2026-06-30 10:05:31,506 - [INFO] - [36m[INFO][0m Device Hash: mock_hash_deepak
+2026-06-30 10:05:31,883 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-30 10:05:31,883 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 10:05:31,883 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 10:05:31,883 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 10:05:31,883 - [INFO] - [36m[INFO][0m User: deepak@upi
+2026-06-30 10:05:31,883 - [INFO] - [36m[INFO][0m Hold Mean: 90.0 ms
+2026-06-30 10:05:31,883 - [INFO] - [36m[INFO][0m Hold Std: 10.0 ms
+2026-06-30 10:05:31,883 - [INFO] - [36m[INFO][0m IKI Mean: 150.0 ms
+2026-06-30 10:05:31,883 - [INFO] - [36m[INFO][0m IKI Std: 20.0 ms
+2026-06-30 10:05:31,883 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 10:05:31,883 - [INFO] - [36m[INFO][0m Hesitation: 100.0 ms
+2026-06-30 10:05:31,883 - [INFO] - [36m[INFO][0m Mouse Entropy: 5.0
+2026-06-30 10:05:31,884 - [INFO] - [36m[INFO][0m Gyro Angle: 45.0
+2026-06-30 10:05:31,884 - [INFO] - [36m[INFO][0m Transaction Amount: 0.0
+2026-06-30 10:05:31,885 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 10:05:31,885 - [INFO] - [36m[INFO][0m Risk Score: [32m0.21[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 10:05:31,885 - [INFO] - [36m[INFO][0m   -> Reason: Unrecognized device fingerprint detected
+2026-06-30 10:05:31,930 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (498.91ms)
+2026-06-30 10:05:32,947 - [INFO] - [36m[INFO][0m Transaction attempt by: deepak@upi for amount: 2500.0
+2026-06-30 10:05:32,959 - [INFO] - [36m[INFO][0m Tx Risk Score: [33m0.64[0m | Action: [33mOTP_CHALLENGE[0m
+2026-06-30 10:05:32,963 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/transaction - [32m200[0m (22.22ms)
+2026-06-30 10:05:32,971 - [INFO] - [36m[INFO][0m Login attempt for: albert@upi
+2026-06-30 10:05:32,971 - [INFO] - [36m[INFO][0m Customer Name: Albert
+2026-06-30 10:05:32,971 - [INFO] - [36m[INFO][0m UPI ID: albert@upi
+2026-06-30 10:05:32,971 - [INFO] - [36m[INFO][0m Device Hash: mock_hash_albert
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m User: albert@upi
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m Hold Mean: 90.0 ms
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m Hold Std: 10.0 ms
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m IKI Mean: 150.0 ms
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m IKI Std: 20.0 ms
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m Hesitation: 100.0 ms
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m Mouse Entropy: 5.0
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m Gyro Angle: 45.0
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m Transaction Amount: 0.0
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 10:05:33,361 - [INFO] - [36m[INFO][0m Risk Score: [32m0.13[0m | Level: [32mSAFE[0m | Action: [32mALLOW[0m
+2026-06-30 10:05:33,363 - [INFO] - [36m[INFO][0m   -> Reason: Unrecognized device fingerprint detected
+2026-06-30 10:05:33,371 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (405.84ms)
+2026-06-30 10:05:34,381 - [INFO] - [36m[INFO][0m Transaction attempt by: albert@upi for amount: 2500.0
+2026-06-30 10:05:34,415 - [INFO] - [36m[INFO][0m Tx Risk Score: [32m0.22[0m | Action: [32mALLOW[0m
+2026-06-30 10:05:34,416 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/transaction - [32m200[0m (36.99ms)
+2026-06-30 10:05:35,425 - [INFO] - [36m[INFO][0m Transaction attempt by: albert@upi for amount: 20000.0
+2026-06-30 10:05:35,441 - [INFO] - [36m[INFO][0m Tx Risk Score: [33m0.61[0m | Action: [33mOTP_CHALLENGE[0m
+2026-06-30 10:05:35,441 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/transaction - [32m200[0m (16.26ms)
+2026-06-30 10:06:55,644 - [INFO] - [36m[INFO][0m Login attempt for: deepak@kavach
+2026-06-30 10:06:55,644 - [WARNING] - [33m[WARN][0m [31mLogin Failed: Invalid credentials for deepak@kavach[0m
+2026-06-30 10:06:55,644 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [31m401[0m (163.18ms)
+2026-06-30 10:09:20,680 - [INFO] - [36m[INFO][0m Login attempt for: deepak@kavach
+2026-06-30 10:09:20,680 - [WARNING] - [33m[WARN][0m [31mLogin Failed: Invalid credentials for deepak@kavach[0m
+2026-06-30 10:09:20,686 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [31m401[0m (10.85ms)
+2026-06-30 10:09:39,132 - [INFO] - [36m[INFO][0m Login attempt for: deepak@upi
+2026-06-30 10:09:39,135 - [INFO] - [36m[INFO][0m Customer Name: Deepak
+2026-06-30 10:09:39,137 - [INFO] - [36m[INFO][0m UPI ID: deepak@upi
+2026-06-30 10:09:39,138 - [INFO] - [36m[INFO][0m Device Hash: kavach_1f995b0b06
+2026-06-30 10:09:39,723 - [WARNING] - [33m[WARN][0m [31mLogin Failed: Invalid credentials for deepak@upi[0m
+2026-06-30 10:09:39,729 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [31m401[0m (607.30ms)
+2026-06-30 10:10:47,293 - [INFO] - [36m[INFO][0m Login attempt for: deepak@upi
+2026-06-30 10:10:47,293 - [INFO] - [36m[INFO][0m Customer Name: Deepak
+2026-06-30 10:10:47,296 - [INFO] - [36m[INFO][0m UPI ID: deepak@upi
+2026-06-30 10:10:47,297 - [INFO] - [36m[INFO][0m Device Hash: kavach_1f995b0b06
+2026-06-30 10:10:47,940 - [INFO] - [36m[INFO][0m Running Risk Engine. User Enrollment Phase: False
+2026-06-30 10:10:47,940 - [INFO] - [36m[INFO][0m [35m[DPDP Compliance Check] Scrubbing PII. Generating one-way Timing Matrix Hash...[0m
+2026-06-30 10:10:47,947 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 10:10:47,947 - [INFO] - [36m[INFO][0m KAVACH BEHAVIORAL ANALYSIS
+2026-06-30 10:10:47,950 - [INFO] - [36m[INFO][0m User: deepak@upi
+2026-06-30 10:10:47,950 - [INFO] - [36m[INFO][0m Hold Mean: 220.0 ms
+2026-06-30 10:10:47,950 - [INFO] - [36m[INFO][0m Hold Std: 29.0 ms
+2026-06-30 10:10:47,950 - [INFO] - [36m[INFO][0m IKI Mean: 0.0 ms
+2026-06-30 10:10:47,961 - [INFO] - [36m[INFO][0m IKI Std: 0.0 ms
+2026-06-30 10:10:47,961 - [INFO] - [36m[INFO][0m Backspaces: 0
+2026-06-30 10:10:47,961 - [INFO] - [36m[INFO][0m Hesitation: 2501.0 ms
+2026-06-30 10:10:47,969 - [INFO] - [36m[INFO][0m Mouse Entropy: 0.0
+2026-06-30 10:10:47,969 - [INFO] - [36m[INFO][0m Gyro Angle: 0.0
+2026-06-30 10:10:47,969 - [INFO] - [36m[INFO][0m Transaction Amount: 1500.0
+2026-06-30 10:10:47,969 - [INFO] - [36m[INFO][0m ============================================================
+2026-06-30 10:10:47,980 - [INFO] - [36m[INFO][0m Risk Score: [33m0.7[0m | Level: [33mCHALLENGE[0m | Action: [33mOTP_CHALLENGE[0m
+2026-06-30 10:10:47,980 - [INFO] - [36m[INFO][0m   -> Reason: Unrecognized device fingerprint detected
+2026-06-30 10:10:47,985 - [INFO] - [36m[INFO][0m   -> Reason: Device matches NO known historical devices
+2026-06-30 10:10:47,985 - [INFO] - [36m[INFO][0m   -> Reason: INFO: Low-Value UPI Transaction (₹1500.0). Behavioral ML bypassed for <0.01s latency.
+2026-06-30 10:10:48,029 - [INFO] - [36m[INFO][0m [UI ACTION] [35mPOST[0m /api/v1/login - [32m200[0m (742.13ms)

@@ -227,7 +227,7 @@ def login_user(login_data: UserLogin, db: Session = Depends(get_db)):
     db.commit()
 
     token = None
-    if action == "ALLOW":
+    if action in ["ALLOW", "OTP_CHALLENGE"]:
         token = create_access_token(data={"sub": user.username})
 
     return RiskResponse(
